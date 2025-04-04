@@ -48,6 +48,8 @@ export const registrationUser = CatchAsyncError(
       if (emailVerification) {
         // Update the existing document
         emailVerification.otp = activationCode;
+        emailVerification.name = name;
+        emailVerification.password = password;
         await emailVerification.save();
         console.log("Email updated");
       } else {
@@ -55,12 +57,14 @@ export const registrationUser = CatchAsyncError(
         await new emailVerificationModel({
           email,
           otp: activationCode,
+          name,
+          password
         }).save();
         console.log("new Email added");
       }
 
       const html = await ejs.renderFile(
-        path.join(__dirname, "./Activation-mail.ejs"),
+        path.join(__dirname, "../mails/Activation-mail.ejs"),
         data
       );
 
@@ -99,27 +103,25 @@ export const createActivationToken = (user: any): IActivationToken => {
 
 interface IActivationRequest {
   email: string;
-  name: string;
-  password: string;
   activation_code: string;
 }
+
 export const activateUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { activation_code, email, name, password } =
-        req.body as IActivationRequest;
+      const { activation_code, email } = req.body as IActivationRequest;
 
-      const newUser = await emailVerificationModel.findOne({
+      const emailVerification = await emailVerificationModel.findOne({
         email,
       });
 
-      if (!newUser) {
+      if (!emailVerification) {
         return next(
           new ErrorHandler("Invalid user or activation code expired", 400)
         );
       }
 
-      if (newUser?.otp !== activation_code) {
+      if (emailVerification?.otp !== activation_code) {
         return next(new ErrorHandler("Invalid activation code", 400));
       }
 
@@ -129,11 +131,17 @@ export const activateUser = CatchAsyncError(
         return next(new ErrorHandler("Email already Exist", 400));
       }
 
+      // Create user with stored data
       const user = await userModel.create({
-        name,
+        name: emailVerification.name || "User", // Use stored name or default
         email,
-        password,
+        password: emailVerification.password || "DefaultPassword123!", // Use stored password or default
+        phone: "0000000000", // Default phone number
+        role: "customer" // Default role
       });
+
+      // Delete the email verification record
+      await emailVerificationModel.deleteOne({ email });
 
       sendToken(user, 200, res);
     } catch (error: any) {
