@@ -3,13 +3,16 @@ import mongoose, { Document, Schema } from "mongoose";
 import { Model } from "mongoose";
 
 const emailRegexPattern: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export interface EmailVerification extends Document {
+export interface IEmailVerification extends Document {
   email: string;
   otp: string;
+  name?: string;
+  password?: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-const emailVerificationSchema: Schema<EmailVerification> = new mongoose.Schema({
+const emailVerificationSchema: Schema<IEmailVerification> = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "please enter your email"],
@@ -26,15 +29,16 @@ const emailVerificationSchema: Schema<EmailVerification> = new mongoose.Schema({
     type:String,
     required: true,
   },
-  createdAt:{
-    type: Date,
-    default:Date.now,
-    expires:'30m'
-  }
-});
+  name: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
+}, { timestamps: true });
 
 
-const emailVerificationModel: Model<EmailVerification> = mongoose.model(
+const emailVerificationModel: Model<IEmailVerification> = mongoose.model(
   "EmailVerification",
   emailVerificationSchema
 );

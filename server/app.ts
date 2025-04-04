@@ -9,6 +9,7 @@ import userRouter from "./routes/user.route";
 import passport from "passport";
 import "./config/google.strategy";
 import { accessTokenOptions, refreshTokenOptions } from "./utils/jwt";
+import eventRoutes from './routes/event.route';
 app.use(express.json({ limit: "50mb" }));
 
 app.use((req, res, next) => {
@@ -42,7 +43,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Register routes
 app.use("/api/v1", userRouter);
+app.use('/api/v1/events', eventRoutes);
 
 //google auth route
 app.get(

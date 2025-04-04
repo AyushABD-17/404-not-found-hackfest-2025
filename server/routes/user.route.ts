@@ -1,4 +1,4 @@
-import { isAuthenticate } from './../middleware/auth';
+import { isAuthenticate } from '../middleware/auth';
 import express from 'express';
 import { activateUser, getUserInfo, loginUser, logoutUser, registrationUser, resetPassword, sendPasswordResetEmail, updateAccessToken, updatePassword, updateUserInfo } from '../controllers/user.controller';
 
