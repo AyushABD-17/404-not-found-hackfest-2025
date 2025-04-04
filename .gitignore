@@ -1,0 +1,82 @@
+/client/node_modules
+/server/node_modules
+/client/build
+/server/build
+/client/dist
+/server/dist
+
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+
+# Dependency directories
+node_modules    
+
+
+# IDEs and editors
+.idea
+.vscode
+
+
+# OS
+.DS_Store
+
+
+# Misc
+*.pem
+*.key
+*.crt
+*.csr
+*.pfx
+*.p12
+
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-journal
+
+
+# Docker
+*.log
+*.log.*
+*.log.*.*
+*.log.*.*.*
+
+
+# Misc
+*.pem
+*.key
+*.crt
+*.csr
+*.pfx
+*.p12
+
+
+
+
+
+
+
+
+
+
+
+
+
