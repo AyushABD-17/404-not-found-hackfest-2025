@@ -4,6 +4,10 @@
 /server/build
 /client/dist
 /server/dist
+/organizer/node_modules
+/organizer/build
+/organizer/dist
+
 
 .env
 .env.local
