@@ -2,6 +2,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 
 interface IEvent extends Document {
   clientId: Types.ObjectId;
+  eventDetailId: Types.ObjectId;
   name: string;
   description: string;
   startDate: Date;
@@ -15,7 +16,7 @@ const EventSchema = new Schema<IEvent>(
   {
     clientId: {
       type: Schema.Types.ObjectId,
-      ref: 'Client',
+      ref: 'User',
       required: true,
     },
     name: {
