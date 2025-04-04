@@ -7,9 +7,14 @@ import SupportHub from "@/components/pages/dashboard/SupportHub";
 
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
+    <div
+      className="min-h-screen w-full flex flex-col items-center justify-center"
+      style={{
+        background: "linear-gradient(90deg, #5B46E3, #6565F1)", // Adjusted gradient color
+      }}
+    >
       <Dashboard />
       <LiveUpdates />
       <MyFeedback />
@@ -20,4 +25,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
