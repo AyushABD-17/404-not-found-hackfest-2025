@@ -70,15 +70,15 @@ const MyFeedback: React.FC = () => {
   ];
 
   return (
-    <div id="feedbackCenter" className="page-section min-h-screen p-4 md:p-6 lg:p-8">
+    <div id="feedbackCenter" className="page-section min-h-screen p-4 md:p-6 lg:p-8 bg-gray-900">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">My Feedback</h1>
-        <p className="text-gray-600">Share your thoughts and help improve the event experience</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-white">My Feedback</h1>
+        <p className="text-gray-400">Share your thoughts and help improve the event experience</p>
       </div>
 
       {/* Feedback Hero Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl overflow-hidden shadow-lg mb-8 relative">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-8 relative">
         <div className="md:flex">
           <div className="p-6 md:w-2/3 text-white z-10 relative">
             <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs mb-3 backdrop-blur-sm">
@@ -106,27 +106,26 @@ const MyFeedback: React.FC = () => {
                 target.src = "https://placehold.co/600x400";
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-purple-600/60 md:bg-none"></div>
-            
+            <div className="absolute inset-0 bg-indigo-900/20"></div>
           </div>
         </div>
       </div>
 
       {/* Quick Reaction Section */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
-        <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-purple-50 to-indigo-50">
-          <h2 className="text-lg font-bold text-gray-800">Quick Reaction</h2>
-          <p className="text-sm text-gray-500">How are you feeling about the keynote presentation?</p>
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
+        <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
+          <h2 className="text-lg font-bold text-white">Quick Reaction</h2>
+          <p className="text-sm text-gray-400">How are you feeling about the keynote presentation?</p>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-5 gap-2 mb-5">
             {quickReactions.map((reaction, index) => (
               <button
                 key={index}
-                className="bg-gray-50 hover:bg-gray-100 rounded-lg p-3 transition duration-200 flex flex-col items-center"
+                className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 transition duration-200 flex flex-col items-center"
               >
                 <span className="text-4xl mb-1">{reaction.emoji}</span>
-                <span className="text-xs text-gray-600">{reaction.label}</span>
+                <span className="text-xs text-gray-300">{reaction.label}</span>
               </button>
             ))}
           </div>
@@ -134,7 +133,7 @@ const MyFeedback: React.FC = () => {
             <input
               type="text"
               placeholder="Add a quick comment (optional)"
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white placeholder-gray-400"
             />
           </div>
           <div className="mt-4 flex justify-end">
@@ -146,20 +145,20 @@ const MyFeedback: React.FC = () => {
       </div>
 
       {/* Detailed Feedback Form */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
-        <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-blue-50 to-cyan-50">
-          <h2 className="text-lg font-bold text-gray-800">Detailed Feedback</h2>
-          <p className="text-sm text-gray-500">Help us improve with your specific thoughts</p>
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
+        <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
+          <h2 className="text-lg font-bold text-white">Detailed Feedback</h2>
+          <p className="text-sm text-gray-400">Help us improve with your specific thoughts</p>
         </div>
         <div className="p-5">
           <form>
             <div className="mb-4">
-              <label htmlFor="event" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="event" className="block text-sm font-medium text-gray-300 mb-1">
                 Which session are you reviewing?
               </label>
               <select
                 id="event"
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white"
               >
                 {sessionOptions.map((option, index) => (
                   <option key={index} selected={index === 0}>
@@ -170,7 +169,7 @@ const MyFeedback: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Rate the content quality
               </label>
               <div className="flex items-center space-x-1">
@@ -180,7 +179,7 @@ const MyFeedback: React.FC = () => {
                     <button
                       key={index}
                       type="button"
-                      className="p-1 text-gray-300 hover:text-yellow-400"
+                      className="p-1 text-gray-600 hover:text-yellow-400"
                     >
                       <svg
                         className="w-8 h-8"
@@ -196,7 +195,7 @@ const MyFeedback: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 What did you like most?
               </label>
               <div className="flex flex-wrap gap-2">
@@ -204,7 +203,7 @@ const MyFeedback: React.FC = () => {
                   <button
                     key={index}
                     type="button"
-                    className="px-3 py-1.5 border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-purple-50 hover:border-purple-200 transition duration-200"
+                    className="px-3 py-1.5 border border-gray-600 rounded-full text-sm text-gray-300 hover:bg-purple-900/30 hover:border-purple-500 transition duration-200"
                   >
                     {option}
                   </button>
@@ -213,30 +212,30 @@ const MyFeedback: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="suggestions" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="suggestions" className="block text-sm font-medium text-gray-300 mb-1">
                 Any suggestions for improvement?
               </label>
               <textarea
                 id="suggestions"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white placeholder-gray-400"
                 placeholder="Share your thoughts here..."
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="hashtags" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="hashtags" className="block text-sm font-medium text-gray-300 mb-1">
                 Add hashtags (optional)
               </label>
               <div className="flex">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-200 bg-gray-50 text-gray-500 text-sm">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-600 bg-gray-700 text-gray-400 text-sm">
                   #
                 </span>
                 <input
                   type="text"
                   id="hashtags"
                   name="hashtags"
-                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
                   placeholder="TechConf2023, Inspiring, Future"
                 />
               </div>
@@ -246,9 +245,9 @@ const MyFeedback: React.FC = () => {
               <input
                 id="anonymous"
                 type="checkbox"
-                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 rounded bg-gray-700"
               />
-              <label htmlFor="anonymous" className="ml-2 block text-sm text-gray-700">
+              <label htmlFor="anonymous" className="ml-2 block text-sm text-gray-300">
                 Submit anonymously
               </label>
             </div>
@@ -256,7 +255,7 @@ const MyFeedback: React.FC = () => {
             <div className="flex justify-end">
               <button
                 type="button"
-                className="mr-3 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition duration-200"
+                className="mr-3 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-sm font-medium transition duration-200"
               >
                 Save Draft
               </button>
@@ -272,23 +271,23 @@ const MyFeedback: React.FC = () => {
       </div>
 
       {/* Your Previous Feedback */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
-        <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-amber-50 to-yellow-50">
-          <h2 className="text-lg font-bold text-gray-800">Your Previous Feedback</h2>
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
+        <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-amber-900/50 to-yellow-900/50">
+          <h2 className="text-lg font-bold text-white">Your Previous Feedback</h2>
         </div>
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-gray-700">
           {previousFeedback.map((feedback, index) => (
-            <div key={index} className="p-4 hover:bg-gray-50 transition duration-150">
+            <div key={index} className="p-4 hover:bg-gray-700/50 transition duration-150">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-medium text-gray-800">{feedback.title}</h3>
+                  <h3 className="font-medium text-white">{feedback.title}</h3>
                   <div className="flex mt-1">
                     {Array(5)
                       .fill(0)
                       .map((_, starIndex) => (
                         <svg
                           key={starIndex}
-                          className={`w-4 h-4 ${starIndex < feedback.rating ? "text-yellow-400" : "text-gray-300"}`}
+                          className={`w-4 h-4 ${starIndex < feedback.rating ? "text-yellow-400" : "text-gray-600"}`}
                           fill="currentColor"
                           viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg"
@@ -298,14 +297,14 @@ const MyFeedback: React.FC = () => {
                       ))}
                   </div>
                 </div>
-                <span className="text-xs text-gray-500">{feedback.time}</span>
+                <span className="text-xs text-gray-400">{feedback.time}</span>
               </div>
-              <p className="text-gray-600 text-sm mt-2">{feedback.comment}</p>
+              <p className="text-gray-400 text-sm mt-2">{feedback.comment}</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {feedback.hashtags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800"
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-900/30 text-purple-300"
                   >
                     {tag}
                   </span>
@@ -314,15 +313,15 @@ const MyFeedback: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
-          <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
+        <div className="p-4 bg-gray-700/50 border-t border-gray-700 text-center">
+          <button className="text-purple-400 hover:text-purple-300 text-sm font-medium">
             View All Feedback
           </button>
         </div>
       </div>
 
       {/* Social Sentiment Section */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl overflow-hidden shadow-lg relative">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg relative">
         <div className="p-6 text-white relative z-10">
           <h2 className="text-xl font-bold mb-3">Join The Conversation</h2>
           <p className="mb-4 text-indigo-100">Share your experience using our hashtag and see what others are saying!</p>

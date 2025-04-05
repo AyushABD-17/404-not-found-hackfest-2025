@@ -143,11 +143,11 @@ const EventSchedule: React.FC = () => {
   };
 
   return (
-    <div id="eventSchedule" className="page-section min-h-screen p-4 md:p-6 lg:p-8">
+    <div id="eventSchedule" className="page-section min-h-screen p-4 md:p-6 lg:p-8 bg-gray-900">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Event Schedule</h1>
-        <p className="text-gray-600">Plan your day and never miss an important session</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-white">Event Schedule</h1>
+        <p className="text-gray-400">Plan your day and never miss an important session</p>
       </div>
 
       {/* Schedule Hero Banner */}
@@ -212,7 +212,7 @@ const EventSchedule: React.FC = () => {
               <button
                 key={index}
                 className={`px-4 py-2 text-sm font-medium mr-2 whitespace-nowrap rounded-full ${
-                  option.isActive ? "bg-purple-600 text-white" : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  option.isActive ? "bg-purple-600 text-white" : "bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700"
                 }`}
               >
                 {option.label}
@@ -222,18 +222,18 @@ const EventSchedule: React.FC = () => {
 
           {/* Filters */}
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-600">Filter:</span>
-            <select className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            <span className="text-sm text-gray-400">Filter:</span>
+            <select className="px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               {trackOptions.map((option, index) => (
                 <option key={index}>{option}</option>
               ))}
             </select>
-            <select className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            <select className="px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               {roomOptions.map((option, index) => (
                 <option key={index}>{option}</option>
               ))}
             </select>
-            <button className="p-1.5 text-gray-500 hover:text-purple-600 transition-colors">
+            <button className="p-1.5 text-gray-400 hover:text-purple-400 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
@@ -243,46 +243,46 @@ const EventSchedule: React.FC = () => {
       </div>
 
       {/* Main Schedule Timeline */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-8 overflow-hidden">
         {/* Morning Sessions */}
-        <div className="border-b border-gray-100">
-          <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50">
-            <h2 className="text-lg font-bold text-gray-800">Morning Sessions</h2>
+        <div className="border-b border-gray-700">
+          <div className="p-4 bg-gradient-to-r from-amber-900/50 to-orange-900/50">
+            <h2 className="text-lg font-bold text-white">Morning Sessions</h2>
           </div>
 
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-700">
             {morningSessions.map((session, index) => (
-              <div key={index} className={`p-4 ${session.isLive ? "bg-purple-50 border-l-4 border-purple-500" : ""}`}>
+              <div key={index} className={`p-4 ${session.isLive ? "bg-purple-900/30 border-l-4 border-purple-500" : ""}`}>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="mb-3 lg:mb-0">
                     <div className="flex items-center">
                       {session.isLive && (
-                        <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">LIVE NOW</span>
+                        <span className="px-2 py-1 bg-purple-800 text-purple-200 rounded-full text-xs font-medium">LIVE NOW</span>
                       )}
-                      <span className={`text-sm text-gray-500 ${session.isLive ? "ml-2" : ""}`}>{session.time}</span>
+                      <span className={`text-sm text-gray-400 ${session.isLive ? "ml-2" : ""}`}>{session.time}</span>
                     </div>
-                    <h3 className="text-lg font-medium text-gray-800 mt-1">{session.title}</h3>
-                    <div className="flex items-center mt-1 text-sm text-gray-600">
-                      <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <h3 className="text-lg font-medium text-white mt-1">{session.title}</h3>
+                    <div className="flex items-center mt-1 text-sm text-gray-300">
+                      <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                       {session.location}
                       <span className="mx-2">•</span>
-                      <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                       {session.speaker}
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className={`inline-flex items-center px-3 py-1.5 rounded-lg text-sm hover:bg-${session.isLive ? "purple" : "gray"}-200 transition duration-200 ${session.isLive ? "bg-purple-100 text-purple-700" : "bg-gray-100 text-gray-700"}`}>
+                    <button className={`inline-flex items-center px-3 py-1.5 rounded-lg text-sm hover:bg-${session.isLive ? "purple" : "gray"}-700 transition duration-200 ${session.isLive ? "bg-purple-800 text-purple-200" : "bg-gray-700 text-gray-200"}`}>
                       <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       Add to My Schedule
                     </button>
-                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition duration-200">
+                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-700 text-gray-200 rounded-lg text-sm hover:bg-gray-600 transition duration-200">
                       <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -290,10 +290,10 @@ const EventSchedule: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <p className="mt-2 text-sm text-gray-600">{session.description}</p>
+                <p className="mt-2 text-sm text-gray-300">{session.description}</p>
                 <div className="mt-3 flex flex-wrap gap-1">
                   {session.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${tag.color}-100 text-${tag.color}-800`}>
+                    <span key={tagIndex} className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${tag.color}-900/30 text-${tag.color}-300`}>
                       {tag.label}
                     </span>
                   ))}
@@ -304,60 +304,60 @@ const EventSchedule: React.FC = () => {
         </div>
 
         {/* Lunch Break */}
-        <div className="p-4 bg-gray-50 border-b border-gray-100">
+        <div className="p-4 bg-gray-800 border-b border-gray-700">
           <div className="flex items-center">
-            <svg className="w-5 h-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-base font-medium text-gray-700">{lunchBreak.time}</h3>
-            <span className="mx-2">|</span>
+            <h3 className="text-base font-medium text-gray-200">{lunchBreak.time}</h3>
+            <span className="mx-2 text-gray-600">|</span>
             <div className="flex items-center">
-              <svg className="w-5 h-5 text-gray-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <span className="text-gray-700 font-medium">{lunchBreak.title}</span>
+              <span className="text-gray-200 font-medium">{lunchBreak.title}</span>
             </div>
-            <span className="ml-2 text-gray-500 text-sm">({lunchBreak.location})</span>
+            <span className="ml-2 text-gray-400 text-sm">({lunchBreak.location})</span>
           </div>
         </div>
 
         {/* Afternoon Sessions */}
         <div>
-          <div className="p-4 bg-gradient-to-r from-indigo-50 to-blue-50">
-            <h2 className="text-lg font-bold text-gray-800">Afternoon Sessions</h2>
+          <div className="p-4 bg-gradient-to-r from-indigo-900/50 to-blue-900/50">
+            <h2 className="text-lg font-bold text-white">Afternoon Sessions</h2>
           </div>
 
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-700">
             {afternoonSessions.map((session, index) => (
               <div key={index} className="p-4">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="mb-3 lg:mb-0">
                     <div className="flex items-center">
-                      <span className="text-sm text-gray-500">{session.time}</span>
+                      <span className="text-sm text-gray-400">{session.time}</span>
                     </div>
-                    <h3 className="text-lg font-medium text-gray-800 mt-1">{session.title}</h3>
-                    <div className="flex items-center mt-1 text-sm text-gray-600">
-                      <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <h3 className="text-lg font-medium text-white mt-1">{session.title}</h3>
+                    <div className="flex items-center mt-1 text-sm text-gray-300">
+                      <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                       {session.location}
                       <span className="mx-2">•</span>
-                      <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                       {session.speaker}
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition duration-200">
+                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-700 text-gray-200 rounded-lg text-sm hover:bg-gray-600 transition duration-200">
                       <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       Add to My Schedule
                     </button>
-                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition duration-200">
+                    <button className="inline-flex items-center px-3 py-1.5 bg-gray-700 text-gray-200 rounded-lg text-sm hover:bg-gray-600 transition duration-200">
                       <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -365,10 +365,10 @@ const EventSchedule: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <p className="mt-2 text-sm text-gray-600">{session.description}</p>
+                <p className="mt-2 text-sm text-gray-300">{session.description}</p>
                 <div className="mt-3 flex flex-wrap gap-1">
                   {session.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${tag.color}-100 text-${tag.color}-800`}>
+                    <span key={tagIndex} className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${tag.color}-900/30 text-${tag.color}-300`}>
                       {tag.label}
                     </span>
                   ))}
@@ -379,7 +379,7 @@ const EventSchedule: React.FC = () => {
         </div>
 
         {/* Evening Event */}
-        <div className="p-5 bg-gradient-to-r from-purple-50 to-indigo-50 border-t border-gray-100 relative">
+        <div className="p-5 bg-gradient-to-r from-purple-900/50 to-indigo-900/50 border-t border-gray-700 relative">
           <div className="flex items-start">
             <div className="flex-shrink-0">
               <img
@@ -394,22 +394,22 @@ const EventSchedule: React.FC = () => {
               />
             </div>
             <div className="ml-4 flex-1">
-              <h3 className="text-lg font-medium text-gray-800">{eveningEvent.title}</h3>
-              <div className="flex items-center mt-1 text-sm text-gray-600">
-                <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <h3 className="text-lg font-medium text-white">{eveningEvent.title}</h3>
+              <div className="flex items-center mt-1 text-sm text-gray-300">
+                <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {eveningEvent.time}
                 <span className="mx-2">•</span>
-                <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 {eveningEvent.location}
               </div>
-              <p className="mt-2 text-sm text-gray-600">{eveningEvent.description}</p>
+              <p className="mt-2 text-sm text-gray-300">{eveningEvent.description}</p>
               <div className="mt-3">
-                <button className="inline-flex items-center px-3 py-1.5 bg-purple-100 text-purple-700 rounded-lg text-sm hover:bg-purple-200 transition duration-200">
+                <button className="inline-flex items-center px-3 py-1.5 bg-purple-800 text-purple-200 rounded-lg text-sm hover:bg-purple-700 transition duration-200">
                   <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -423,23 +423,23 @@ const EventSchedule: React.FC = () => {
       </div>
 
       {/* My Schedule Section */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
-        <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-fuchsia-50 to-pink-50">
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-8 overflow-hidden">
+        <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-fuchsia-900/50 to-pink-900/50">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-800">My Schedule</h2>
-            <button className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+            <h2 className="text-lg font-bold text-white">My Schedule</h2>
+            <button className="text-sm text-purple-400 hover:text-purple-300 font-medium">
               Export to Calendar
             </button>
           </div>
         </div>
 
         <div className="p-5">
-          <div className="bg-purple-50 rounded-lg p-4 border border-purple-100 flex items-center justify-center text-center flex-col py-8">
+          <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-800 flex items-center justify-center text-center flex-col py-8">
             <svg className="w-12 h-12 text-purple-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Your personal schedule is empty</h3>
-            <p className="text-gray-600 mb-4">Add sessions to your schedule to keep track of the events you're interested in.</p>
+            <h3 className="text-lg font-medium text-white mb-2">Your personal schedule is empty</h3>
+            <p className="text-gray-400 mb-4">Add sessions to your schedule to keep track of the events you're interested in.</p>
             <button className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition duration-200">
               Browse Sessions
             </button>
@@ -449,29 +449,29 @@ const EventSchedule: React.FC = () => {
 
       {/* Recommendations */}
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Recommended for You</h2>
+        <h2 className="text-xl font-bold text-white mb-4">Recommended for You</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {recommendations.map((rec, index) => (
-            <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition duration-200">
-              <div className={`border-b border-gray-100 p-3 bg-gradient-to-r from-${rec.tag.color}-50 to-${rec.tag.color === "blue" ? "indigo" : rec.tag.color === "green" ? "teal" : "rose"}-50`}>
+            <div key={index} className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden hover:shadow-md transition duration-200">
+              <div className={`border-b border-gray-700 p-3 bg-gradient-to-r from-${rec.tag.color}-900/50 to-${rec.tag.color === "blue" ? "indigo" : rec.tag.color === "green" ? "teal" : "rose"}-900/50`}>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">{rec.time}</span>
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${rec.tag.color}-100 text-${rec.tag.color}-800`}>
+                  <span className="text-sm text-gray-400">{rec.time}</span>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${rec.tag.color}-900/30 text-${rec.tag.color}-300`}>
                     {rec.tag.label}
                   </span>
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="font-medium text-gray-800">{rec.title}</h3>
-                <div className="flex items-center mt-1 text-sm text-gray-600">
-                  <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <h3 className="font-medium text-white">{rec.title}</h3>
+                <div className="flex items-center mt-1 text-sm text-gray-300">
+                  <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   {rec.location}
                 </div>
                 <div className="mt-3">
-                  <button className="w-full inline-flex items-center justify-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition duration-200">
+                  <button className="w-full inline-flex items-center justify-center px-3 py-1.5 bg-gray-700 text-gray-200 rounded-lg text-sm hover:bg-gray-600 transition duration-200">
                     <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>

@@ -224,7 +224,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <div id="dashboard" className="page-section min-h-screen p-4 md:p-6 lg:p-8">
+    <div id="dashboard" className="min-h-screen p-4 md:p-6 lg:p-4 bg-gray-900">
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 md:p-6 text-white mb-6 shadow-lg">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
@@ -245,19 +245,19 @@ const Dashboard: React.FC = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition duration-200"
+            className="bg-gray-800 rounded-xl p-4 border border-gray-700 shadow-sm hover:shadow-md transition duration-200"
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-gray-500 text-sm">{stat.title}</p>
-                <h3 className="text-2xl font-bold text-gray-800 mt-1">{stat.value}</h3>
+                <p className="text-gray-400 text-sm">{stat.title}</p>
+                <h3 className="text-2xl font-bold text-white mt-1">{stat.value}</h3>
               </div>
-              <div className={`bg-${stat.color}-100 p-2 rounded-lg`}>
+              <div className={`bg-${stat.color}-900/50 p-2 rounded-lg`}>
                 {stat.icon}
               </div>
             </div>
             <div className="flex items-center mt-4">
-              <span className={`text-xs px-2 py-1 rounded-full bg-${stat.color}-50 text-${stat.color}-600`}>
+              <span className={`text-xs px-2 py-1 rounded-full bg-${stat.color}-900/30 text-${stat.color}-300`}>
                 {stat.status}
               </span>
             </div>
@@ -269,26 +269,26 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Live Updates Column */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-6">
-            <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-purple-50 to-indigo-50">
-              <h2 className="text-xl font-bold text-gray-800">Live Updates</h2>
+          <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden mb-6">
+            <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-purple-900/50 to-indigo-900/50">
+              <h2 className="text-xl font-bold text-white">Live Updates</h2>
             </div>
             <div className="p-4">
               <div className="relative">
-                <div className="absolute left-5 h-full w-0.5 bg-gray-200"></div>
+                <div className="absolute left-5 h-full w-0.5 bg-gray-700"></div>
 
                 {liveUpdates.map((update, index) => (
                   <div key={index} className="relative pl-8 pb-6">
-                    <div className={`absolute left-3 -translate-x-1/2 mt-1.5 w-4 h-4 rounded-full bg-${update.color}-500 border-2 border-white`}></div>
-                    <div className={`bg-${update.color}-50 p-3 rounded-lg`}>
+                    <div className={`absolute left-3 -translate-x-1/2 mt-1.5 w-4 h-4 rounded-full bg-${update.color}-500 border-2 border-gray-800`}></div>
+                    <div className={`bg-${update.color}-900/30 p-3 rounded-lg`}>
                       <div className="flex justify-between items-start">
-                        <p className="font-medium text-gray-800">{update.title}</p>
-                        <span className="text-xs text-gray-500">{update.time}</span>
+                        <p className="font-medium text-white">{update.title}</p>
+                        <span className="text-xs text-gray-400">{update.time}</span>
                       </div>
-                      <p className="text-gray-600 text-sm mt-1">{update.description}</p>
+                      <p className="text-gray-300 text-sm mt-1">{update.description}</p>
                       {update.buttonText && (
                         <div className="mt-3">
-                          <button className={`bg-${update.color}-100 text-${update.color}-700 px-3 py-1 rounded-full text-sm hover:bg-${update.color}-200 transition duration-200`}>
+                          <button className={`bg-${update.color}-800 text-${update.color}-200 px-3 py-1 rounded-full text-sm hover:bg-${update.color}-700 transition duration-200`}>
                             {update.buttonText}
                           </button>
                         </div>
@@ -304,22 +304,22 @@ const Dashboard: React.FC = () => {
         {/* Quick Actions Column */}
         <div>
           {/* Your Upcoming Sessions */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-6">
-            <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-blue-50 to-cyan-50">
-              <h2 className="text-xl font-bold text-gray-800">Your Next Sessions</h2>
+          <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden mb-6">
+            <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-blue-900/50 to-cyan-900/50">
+              <h2 className="text-xl font-bold text-white">Your Next Sessions</h2>
             </div>
             <div className="p-4">
               <div className="space-y-4">
                 {upcomingSessions.map((session, index) => (
-                  <div key={index} className={`p-3 bg-${session.color}-50 rounded-lg`}>
-                    <p className="text-sm text-gray-500">{session.time}</p>
-                    <h4 className="font-semibold text-gray-800">{session.title}</h4>
-                    <p className="text-sm text-gray-600">{session.speaker}</p>
+                  <div key={index} className={`p-3 bg-${session.color}-900/30 rounded-lg`}>
+                    <p className="text-sm text-gray-400">{session.time}</p>
+                    <h4 className="font-semibold text-white">{session.title}</h4>
+                    <p className="text-sm text-gray-300">{session.speaker}</p>
                     <div className="mt-2 flex space-x-2">
-                      <button className={`bg-${session.color}-100 text-${session.color}-700 px-3 py-1 rounded-full text-xs hover:bg-${session.color}-200 transition duration-200`}>
+                      <button className={`bg-${session.color}-800 text-${session.color}-200 px-3 py-1 rounded-full text-xs hover:bg-${session.color}-700 transition duration-200`}>
                         Add to Calendar
                       </button>
-                      <button className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-gray-200 transition duration-200">
+                      <button className="bg-gray-700 text-gray-200 px-3 py-1 rounded-full text-xs hover:bg-gray-600 transition duration-200">
                         Details
                       </button>
                     </div>
@@ -330,20 +330,20 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-orange-50 to-amber-50">
-              <h2 className="text-xl font-bold text-gray-800">Quick Actions</h2>
+          <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden">
+            <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-orange-900/50 to-amber-900/50">
+              <h2 className="text-xl font-bold text-white">Quick Actions</h2>
             </div>
             <div className="p-4 grid grid-cols-2 gap-3">
               {quickActions.map((action, index) => (
                 <button
                   key={index}
-                  className={`p-3 bg-${action.color}-50 rounded-lg hover:bg-${action.color}-100 transition duration-200 flex flex-col items-center justify-center`}
+                  className={`p-3 bg-${action.color}-900/30 rounded-lg hover:bg-${action.color}-800/50 transition duration-200 flex flex-col items-center justify-center`}
                 >
-                  <div className={`bg-${action.color}-100 p-2 rounded-full mb-2`}>
+                  <div className={`bg-${action.color}-800 p-2 rounded-full mb-2`}>
                     {action.icon}
                   </div>
-                  <span className="text-sm font-medium text-gray-700">{action.title}</span>
+                  <span className="text-sm font-medium text-gray-200">{action.title}</span>
                 </button>
               ))}
             </div>
@@ -372,7 +372,6 @@ const Dashboard: React.FC = () => {
             </button>
           </div>
         </div>
-        
       </div>
     </div>
   );

@@ -10,10 +10,7 @@ import React from "react";
 const Page = () => {
   return (
     <div
-      className="min-h-screen w-full flex flex-col items-center justify-center"
-      style={{
-        background: "linear-gradient(90deg, #5B46E3, #6565F1)", // Adjusted gradient color
-      }}
+      
     >
       <Dashboard />
       <LiveUpdates />

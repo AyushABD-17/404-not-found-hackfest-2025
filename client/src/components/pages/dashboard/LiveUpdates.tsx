@@ -159,7 +159,7 @@ const LiveUpdates: React.FC = () => {
       name: "Instagram",
       icon: (
         <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-1.301.975-1.24 2.242-1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204.012 3.584.07 4.85.062 1.366.326 2.633 1.301 3.608 1.301.975 1.24 2.242 1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204zm0-2.163C8.735 0 8.332.013 7.052.072 5.775.13 4.904.332 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.332 4.904.13 5.775.072 7.052.013 8.332 0 8.735 0 12s.013 3.668.072 4.948c.058 1.277.26 2.148.558 2.913.306.789.717 1.459 1.384 2.126.667.667 1.337 1.078 2.126 1.384.765.298 1.636.5 2.913.558 1.28.059 1.683.072 4.948.072s3.668-.013 4.948-.072c1.277-.058 2.148-.26 2.913-.558.789-.306 1.459-.717 2.126-1.384s1.078-1.337 1.384-2.126c.298-.765.5-1.636.558-2.913.059-1.28.072-1.683.072-4.948s-.013-3.668-.072-4.948c-.058-1.277-.26-2.148-.558-2.913-.306-.789-.717-1.459-1.384-2.126S19.86.936 19.095.63c-.765-.298-1.636-.5-2.913-.558C15.668.013 15.265 0 12 0z" />
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-1.301.975-1.24 2.242-1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204zm0-2.163C8.735 0 8.332.013 7.052.072 5.775.13 4.904.332 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.332 4.904.13 5.775.072 7.052.013 8.332 0 8.735 0 12s.013 3.668.072 4.948c.058 1.277.26 2.148.558 2.913.306.789.717 1.459 1.384 2.126.667.667 1.337 1.078 2.126 1.384.765.298 1.636.5 2.913.558 1.28.059 1.683.072 4.948.072s3.668-.013 4.948-.072c1.277-.058 2.148-.26 2.913-.558.789-.306 1.459-.717 2.126-1.384s1.078-1.337 1.384-2.126c.298-.765.5-1.636.558-2.913.059-1.28.072-1.683.072-4.948s-.013-3.668-.072-4.948c-.058-1.277-.26-2.148-.558-2.913-.306-.789-.717-1.459-1.384-2.126S19.86.936 19.095.63c-.765-.298-1.636-.5-2.913-.558C15.668.013 15.265 0 12 0z" />
           <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.162 12 18.162s6.162-2.759 6.162-6.162S15.403 5.838 12 5.838zm0 10c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm4.846-10.405c0 .795-.645 1.44-1.44 1.44s-1.44-.645-1.44-1.44.645-1.44 1.44-1.44 1.44.645 1.44 1.44z" />
         </svg>
       ),
@@ -178,15 +178,15 @@ const LiveUpdates: React.FC = () => {
     "https://images.unsplash.com/photo-1484981138541-3d074aa97716?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8Mnx8bGl2ZXVwZGF0ZXMlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjg0NXww&ixlib=rb-4.0.3&q=80&w=1080";
 
   return (
-    <div id="liveUpdates" className="min-h-screen p-4 sm:p-6 lg:p-8">
+    <div id="liveUpdates" className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gray-900">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Live Updates</h1>
-        <p className="text-gray-600 text-sm sm:text-base">Stay informed with real-time event announcements and updates</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Live Updates</h1>
+        <p className="text-gray-400 text-sm sm:text-base">Stay informed with real-time event announcements and updates</p>
       </div>
 
       {/* Featured Update */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl overflow-hidden shadow-lg mb-8">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-8">
         <div className="flex flex-col md:flex-row">
           <div className="p-6 md:w-2/3 text-white relative">
             <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs mb-3 backdrop-blur-sm">
@@ -198,7 +198,7 @@ const LiveUpdates: React.FC = () => {
               <button className="bg-white text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 transition duration-200">
                 View Map
               </button>
-              <button className="bg-purple-700/30 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700/40 transition duration-200 backdrop-blur-sm">
+              <button className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition duration-200 backdrop-blur-sm">
                 Set Reminder
               </button>
             </div>
@@ -214,8 +214,7 @@ const LiveUpdates: React.FC = () => {
                 e.currentTarget.src = "https://placehold.co/600x400";
               }}
             />
-            <div className="absolute inset-0 bg-purple-900/20" />
-            
+            <div className="absolute inset-0 bg-indigo-900/20" />
           </div>
         </div>
       </div>
@@ -228,7 +227,7 @@ const LiveUpdates: React.FC = () => {
             className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
               tab === "All Updates"
                 ? "bg-purple-600 text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                : "bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700"
             }`}
           >
             {tab}
@@ -237,30 +236,30 @@ const LiveUpdates: React.FC = () => {
       </div>
 
       {/* Timeline Updates */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
         {timelineUpdates.map((update, index) => (
           <div
             key={index}
-            className={`p-4 sm:p-6 ${index < timelineUpdates.length - 1 ? "border-b border-gray-100" : ""}`}
+            className={`p-4 sm:p-6 ${index < timelineUpdates.length - 1 ? "border-b border-gray-700" : ""}`}
           >
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className={`flex-shrink-0 h-10 w-10 bg-${update.color}-100 rounded-full flex items-center justify-center`}>
+              <div className={`flex-shrink-0 h-10 w-10 bg-${update.color}-900/30 rounded-full flex items-center justify-center`}>
                 {update.icon}
               </div>
               <div className="flex-1">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                  <h3 className="text-base sm:text-lg font-medium text-gray-900">{update.title}</h3>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-${update.color}-100 text-${update.color}-800`}>
+                  <h3 className="text-base sm:text-lg font-medium text-white">{update.title}</h3>
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-${update.color}-900/30 text-${update.color}-300`}>
                     {update.status}
                   </span>
                 </div>
-                <p className="text-gray-600 mt-1 text-sm sm:text-base">{update.description}</p>
+                <p className="text-gray-400 mt-1 text-sm sm:text-base">{update.description}</p>
                 {update.buttons.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {update.buttons.map((button, btnIndex) => (
                       <button
                         key={btnIndex}
-                        className={`inline-flex items-center px-3 py-1.5 bg-${button.color}-50 text-${button.color}-700 rounded-lg text-sm hover:bg-${button.color}-100 transition-colors`}
+                        className={`inline-flex items-center px-3 py-1.5 bg-${button.color}-900/30 text-${button.color}-300 rounded-lg text-sm hover:bg-${button.color}-800/30 transition-colors`}
                       >
                         {button.icon}
                         {button.text}
@@ -283,40 +282,40 @@ const LiveUpdates: React.FC = () => {
       {/* Engagement Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* Trending Questions */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="border-b border-gray-100 px-4 py-3 bg-gradient-to-r from-indigo-50 to-indigo-100">
-            <h2 className="text-lg font-bold text-gray-800">Top Questions</h2>
+        <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden">
+          <div className="border-b border-gray-700 px-4 py-3 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
+            <h2 className="text-lg font-bold text-white">Top Questions</h2>
           </div>
           <div className="p-4">
             <ul className="space-y-3">
               {topQuestions.map((question, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <span className="bg-purple-100 text-purple-800 text-sm font-semibold px-2.5 py-0.5 rounded-full h-6 flex items-center flex-shrink-0">
+                  <span className="bg-purple-900/30 text-purple-300 text-sm font-semibold px-2.5 py-0.5 rounded-full h-6 flex items-center flex-shrink-0">
                     {question.count}
                   </span>
                   <div>
-                    <p className="text-gray-800 font-medium text-sm sm:text-base">{question.question}</p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-white font-medium text-sm sm:text-base">{question.question}</p>
+                    <p className="text-sm text-gray-400 mt-1">
                       From {question.asker} •{" "}
-                      <span className="text-purple-600">{question.status}</span>
+                      <span className="text-purple-400">{question.status}</span>
                     </p>
                   </div>
                 </li>
               ))}
             </ul>
-            <button className="mt-4 w-full px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg text-sm font-medium border border-gray-200 transition-colors">
+            <button className="mt-4 w-full px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-sm font-medium border border-gray-600 transition-colors">
               View All Questions
             </button>
           </div>
         </div>
 
         {/* Quick Poll */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="border-b border-gray-100 px-4 py-3 bg-gradient-to-r from-amber-50 to-amber-100">
-            <h2 className="text-lg font-bold text-gray-800">Quick Poll</h2>
+        <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden">
+          <div className="border-b border-gray-700 px-4 py-3 bg-gradient-to-r from-amber-900/50 to-orange-900/50">
+            <h2 className="text-lg font-bold text-white">Quick Poll</h2>
           </div>
           <div className="p-4">
-            <h3 className="font-medium text-gray-800 mb-3 text-sm sm:text-base">Which session format do you prefer?</h3>
+            <h3 className="font-medium text-white mb-3 text-sm sm:text-base">Which session format do you prefer?</h3>
             <div className="space-y-4">
               {quickPollOptions.map((option) => (
                 <div key={option.id} className="space-y-1">
@@ -326,15 +325,15 @@ const LiveUpdates: React.FC = () => {
                         id={option.id}
                         name="poll"
                         type="radio"
-                        className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300"
+                        className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600"
                       />
-                      <label htmlFor={option.id} className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor={option.id} className="ml-2 block text-sm text-gray-300">
                         {option.label}
                       </label>
                     </div>
-                    <span className="text-sm text-gray-500">{option.percentage}</span>
+                    <span className="text-sm text-gray-400">{option.percentage}</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className="w-full bg-gray-700 rounded-full h-2.5">
                     <div
                       className="bg-purple-600 h-2.5 rounded-full transition-all"
                       style={{ width: option.percentage }}
@@ -347,7 +346,7 @@ const LiveUpdates: React.FC = () => {
               <button className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
                 Submit Vote
               </button>
-              <button className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg text-sm font-medium border border-gray-200 transition-colors">
+              <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-sm font-medium border border-gray-600 transition-colors">
                 See Results
               </button>
             </div>
@@ -356,7 +355,7 @@ const LiveUpdates: React.FC = () => {
       </div>
 
       {/* CTA Banner */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-6">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-6">
         <div className="md:flex items-center">
           <div className="p-6 md:w-3/4">
             <h2 className="text-xl font-bold text-white mb-2">Share Your Experience</h2>
@@ -383,6 +382,7 @@ const LiveUpdates: React.FC = () => {
                 e.currentTarget.src = "https://placehold.co/600x400";
               }}
             />
+            <div className="absolute inset-0 bg-indigo-900/20" />
           </div>
         </div>
       </div>
