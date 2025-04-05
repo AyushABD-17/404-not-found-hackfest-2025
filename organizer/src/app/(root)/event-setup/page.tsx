@@ -1,6 +1,6 @@
-import { EventSetup } from "@/components/pages/event-setup/EventSetup";
 
+import FormPage from "@/components/pages/event-setup/form/page";
 export default function EventSetupPage() {
     
-    return <EventSetup />;
+    return <FormPage />;
 }

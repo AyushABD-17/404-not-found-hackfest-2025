@@ -19,7 +19,7 @@ function CustomInput({ handleChange, value, error, touched,type,id,label,placeho
     <div className="my-3">
       <Label
         htmlFor={id}
-        className="ms-1 font-normal dark:text-gray-300 text-gray-600 mb-2"
+        className="ms-1 font-normal dark:text-gray-300 text-gray-600"
       >
         {label}
       </Label>
@@ -32,7 +32,7 @@ function CustomInput({ handleChange, value, error, touched,type,id,label,placeho
         placeholder={placeholder}
         className={`${
           error && touched ? "border-red-500 dark:border-red-600" : ""
-        } w-full px-4 py-3 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent`}
+        } w-full px-4 py-3 my-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent`}
       />
       {error && touched && (
         <span className="text-red-500 text-sm block dark:text-red-600">{error}</span>

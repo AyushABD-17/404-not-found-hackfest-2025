@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
-import React from "react";
+import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 
 interface CustomMultiSelectorProps {
   id: string;
@@ -11,7 +12,7 @@ interface CustomMultiSelectorProps {
   list: { label: string; value: string }[];
 }
 
-const CustomMultiSelector: React.FC<CustomMultiSelectorProps> = ({
+function CustomMultiSelector({
   id,
   label,
   value,
@@ -19,7 +20,9 @@ const CustomMultiSelector: React.FC<CustomMultiSelectorProps> = ({
   touched,
   setFieldValue,
   list,
-}) => {
+}: CustomMultiSelectorProps) {
+  const [customValue, setCustomValue] = useState("");
+
   const handleSelect = (item: string) => {
     if (value.includes(item)) {
       setFieldValue(id, value.filter((selected) => selected !== item));
@@ -28,20 +31,36 @@ const CustomMultiSelector: React.FC<CustomMultiSelectorProps> = ({
     }
   };
 
+  const handleAddCustom = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && customValue.trim()) {
+      e.preventDefault();
+      if (!value.includes(customValue.trim())) {
+        setFieldValue(id, [...value, customValue.trim()]);
+      }
+      setCustomValue("");
+    }
+  };
+
+  const handleRemove = (item: string) => {
+    setFieldValue(id, value.filter((selected) => selected !== item));
+  };
+
   return (
-    <div className="my-3">
-      <Label className="ms-1 font-normal dark:text-gray-400 text-gray-600">
+    <div className="my-6 bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+      <Label className="ms-1 font-semibold text-lg dark:text-gray-300 text-gray-600">
         {label}
       </Label>
-      <div className="flex flex-wrap gap-2 my-1">
+      
+      {/* Predefined options */}
+      <div className="flex flex-wrap gap-2 my-2">
         {list.map((item) => (
           <button
             key={item.value}
             type="button"
             onClick={() => handleSelect(item.value)}
-            className={`px-4 py-2 rounded-lg border border-gray-300 dark:border-white/10 text-sm transition-all ${
+            className={`flex items-center gap-1 px-3 py-1 rounded-full bg-gray-700 text-white text-sm hover:bg-gray-600 border border-gray-600 ${
               value.includes(item.value)
-                ? "from-blue-500 to-blue-700 bg-gradient-to-b text-white "
+                ? "  text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-white/5 dark:text-gray-300"
             }`}
           >
@@ -49,11 +68,48 @@ const CustomMultiSelector: React.FC<CustomMultiSelectorProps> = ({
           </button>
         ))}
       </div>
+
+      {/* Custom input */}
+      <div className="mt-2">
+        <Input
+          type="text"
+          value={customValue}
+          onChange={(e) => setCustomValue(e.target.value)}
+          onKeyDown={handleAddCustom}
+          placeholder="Type and press Enter to add custom keyword"
+          className="w-full px-4 py-3 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+      </div>
+
+      {/* Selected items display */}
+      {value.length > 0 && (
+        <div className="mt-3">
+          <p className="text-sm text-gray-400 mb-2">Selected Keywords:</p>
+          <div className="flex flex-wrap gap-2">
+            {value.map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-1 px-3 py-1 rounded-full bg-gray-700 text-white text-sm"
+              >
+                <span>{item}</span>
+                <button
+                  type="button"
+                  onClick={() => handleRemove(item)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {error && touched && (
         <p className="text-red-500 dark:text-red-600 text-sm mt-2">{error}</p>
       )}
     </div>
   );
-};
+}
 
 export default CustomMultiSelector;
