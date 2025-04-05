@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
-
+import { useSelector } from "react-redux";
 const Dashboard: React.FC = () => {
+
+  const { user } = useSelector((state: any) => state.auth);
+  console.log(user);
   const stats = [
     {
       title: "Current Sessions",
@@ -224,7 +227,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <div id="dashboard" className="min-h-screen p-4 md:p-6 lg:p-4 bg-gray-900">
+    <div id="dashboard" className="min-h-screen p-4 md:p-6 lg:p-4 ">
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 md:p-6 text-white mb-6 shadow-lg">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between">

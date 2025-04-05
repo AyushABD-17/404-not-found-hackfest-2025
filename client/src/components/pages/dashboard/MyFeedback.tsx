@@ -70,7 +70,7 @@ const MyFeedback: React.FC = () => {
   ];
 
   return (
-    <div id="feedbackCenter" className="page-section min-h-screen p-4 md:p-6 lg:p-8 bg-gray-900">
+    <div id="feedbackCenter" className="page-section min-h-screen p-4 md:p-6 lg:p-8 ">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl md:text-3xl font-bold text-white">My Feedback</h1>

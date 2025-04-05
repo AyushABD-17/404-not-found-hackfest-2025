@@ -9,7 +9,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  phone: string;
+  phone?: string;
   address?: string;
   role: string;
   comparePassword: (password: string) => Promise<boolean>;
@@ -42,7 +42,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "Please enter your phone number"],
     },
     address: {
       type: String,
