@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FormikProps } from "formik";
 import CustomInput from "./CustomInput";
@@ -15,9 +16,10 @@ interface FormStepsProps {
   formik: FormikProps<FormValues>;
   handleNext: () => void;
   handlePrevious: () => void;
+  isSubmitting: boolean;
 }
 
-const FormSteps: React.FC<FormStepsProps> = ({ step, formik, handleNext, handlePrevious }) => {
+const FormSteps: React.FC<FormStepsProps> = ({ step, formik, handleNext, handlePrevious, isSubmitting }) => {
   const { errors, touched, values, handleChange, handleSubmit, setFieldValue } = formik;
 
   return (
@@ -370,6 +372,29 @@ const FormSteps: React.FC<FormStepsProps> = ({ step, formik, handleNext, handleP
                             touched={(touched.AlertRecipients as any)?.[index]?.email}
                           />
                         </div>
+                        <div className="col-span-2">
+                          <label className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={recipient.isPrimary}
+                              onChange={(e) => {
+                                const updatedRecipients = [...values.AlertRecipients];
+                                // If setting as primary, unset others
+                                if (e.target.checked) {
+                                  updatedRecipients.forEach((r, i) => {
+                                    if (i !== index) {
+                                      r.isPrimary = false;
+                                    }
+                                  });
+                                }
+                                updatedRecipients[index].isPrimary = e.target.checked;
+                                setFieldValue("AlertRecipients", updatedRecipients);
+                              }}
+                              className="form-checkbox h-4 w-4 text-blue-600"
+                            />
+                            <span className="text-sm text-gray-300">Primary Recipient</span>
+                          </label>
+                        </div>
                       </div>
                       <div className="flex justify-end gap-2 mt-4">
                         <button
@@ -416,6 +441,16 @@ const FormSteps: React.FC<FormStepsProps> = ({ step, formik, handleNext, handleP
                         <div>
                           <div className="text-sm text-gray-400">Email</div>
                           <div className="text-white">{recipient.email}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-400">Status</div>
+                          <div className="text-white">
+                            {recipient.isPrimary ? (
+                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Primary
+                              </span>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
                       <div className="flex gap-2">

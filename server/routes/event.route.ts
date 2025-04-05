@@ -18,7 +18,7 @@ router.get("/",
 router.get(
   "/:eventId/full",
 //   authorizeRoles("client"),
-  EventController.getEventWithDetails
+  EventController.getEventDetails
 );
 
 // Get all events with venue details
@@ -36,11 +36,11 @@ router.get(
 );
 
 // Get venue with active issues
-router.get(
-  "/:eventId/active-issues",
-//   authorizeRoles("client"),
-  EventController.getVenueWithActiveIssues
-);
+// router.get(
+//   "/:eventId/active-issues",
+// //   authorizeRoles("client"),
+//   EventController.getVenueWithActiveIssues
+// );
 
 // Search events
 router.get("/search", 

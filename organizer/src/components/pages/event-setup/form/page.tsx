@@ -7,6 +7,9 @@ import { ProgressSteps } from "../components/ProgressSteps";
 import FormSteps from "./FormSteps";
 import Sidebar from "./Sidebar";
 import EventPreview from "./EventPreview";
+import { useCreateEventMutation } from "@/redux/features/api/event/eventApi";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 export interface FormValues {
   EventName: string;
@@ -39,6 +42,8 @@ export interface FormValues {
 const FormPage = () => {
   const { theme } = useTheme();
   const [step, setStep] = useState(1);
+  const router = useRouter();
+  const [createEvent, { isLoading }] = useCreateEventMutation();
 
   const steps = [
     { id: "1", label: "General Information", active: step === 1 },
@@ -82,40 +87,77 @@ const FormPage = () => {
       step === 3 ? step3Schema :
       step === 4 ? step4Schema : step5Schema,
     onSubmit: async (values) => {
-      console.log("Submitted Data:", values);
-      const data = {
-        generalInfo: {
-          EventName: values.EventName,
-          Venue: values.Venue,
-          Location: values.Location,
+      try {
+        const eventData = {
+          name: values.EventName,
+          venue: values.Venue,
+          location: values.Location,
           description: values.description,
-          StartDate: values.StartDate,
-          EndDate: values.EndDate,
-          ExpectedAttendees: values.ExpectedAttendees,
-        },
-        sentimentTracking: {
-          PositiveThreshold: values.PositiveThreshold,
-          NegativeThreshold: values.NegativeThreshold,
-          AlertFrequency: values.AlertFrequency,
-          AnalysisFrequency: values.AnalysisFrequency,
-          AlertThreshold: values.AlertThreshold,
-          AlertMethod: values.AlertMethod,
-          AlertMessage: values.AlertMessage,
-        },
-        keywordsMonitoring: {
-          ExperienceIssues: values.ExperienceIssues,
-          TechnicalIssues: values.TechnicalIssues,
-        },
-        alertSeverity: {
-          CriticalAlerts: values.CriticalAlerts,
-          WarningAlerts: values.WarningAlerts,
-          InfoAlerts: values.InfoAlerts,
-        },
-        notificationSettings: {
-          NotificationMethods: values.NotificationMethods,
-          AlertRecipients: values.AlertRecipients,
-        },
-      };
+          startDate: values.StartDate,
+          endDate: values.EndDate,
+          expectedAttendees: parseInt(values.ExpectedAttendees),
+          clientId: "67f04778f2b74ad885dea60d",
+          sentimentTracking: {
+            positiveThreshold: parseInt(values.PositiveThreshold),
+            negativeThreshold: parseInt(values.NegativeThreshold),
+            alertFrequency: values.AlertFrequency,
+            analysisFrequency: values.AnalysisFrequency,
+            alertThreshold: parseInt(values.AlertThreshold),
+            alertMethods: values.AlertMethod,
+            alertMessage: values.AlertMessage,
+          },
+          keywordsMonitoring: {
+            experienceIssues: values.ExperienceIssues,
+            technicalIssues: values.TechnicalIssues,
+          },
+          alertSeverity: {
+            critical: values.CriticalAlerts,
+            warning: values.WarningAlerts,
+            info: values.InfoAlerts,
+          },
+          notificationMethods: {
+            pushNotifications: {
+              enabled: values.NotificationMethods.PushNotifications.enabled,
+              Critical: values.NotificationMethods.PushNotifications.Critical,
+              Warning: values.NotificationMethods.PushNotifications.Warning,
+              Info: values.NotificationMethods.PushNotifications.Info,
+            },
+            smsNotifications: {
+              enabled: values.NotificationMethods.SMSNotifications.enabled,
+              Critical: values.NotificationMethods.SMSNotifications.Critical,
+              Warning: values.NotificationMethods.SMSNotifications.Warning,
+              Info: values.NotificationMethods.SMSNotifications.Info,
+              phoneNumber: values.NotificationMethods.SMSNotifications.phoneNumber,
+            },
+            emailNotifications: {
+              enabled: values.NotificationMethods.EmailNotifications.enabled,
+              Critical: values.NotificationMethods.EmailNotifications.Critical,
+              Warning: values.NotificationMethods.EmailNotifications.Warning,
+              Info: values.NotificationMethods.EmailNotifications.Info,
+              toEventTeam: values.NotificationMethods.EmailNotifications.toEventTeam,
+            },
+          },
+          alertRecipients: values.AlertRecipients.map(recipient => ({
+            name: recipient.name,
+            role: recipient.role,
+            email: recipient.email,
+            isPrimary: recipient.isPrimary
+          })),
+        };
+
+        console.log("Submitting data:", eventData);
+        const response = await createEvent(eventData).unwrap();
+        
+        if (response.success) {
+          toast.success("Event created successfully!");
+          // router.push("/events");
+        } else {
+          toast.error(response.message || "Failed to create event");
+        }
+      } catch (error: any) {
+        console.error("Error creating event:", error);
+        toast.error(error.data?.message || "An error occurred while creating the event");
+      }
     },
   });
 
@@ -136,8 +178,8 @@ const FormPage = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-4 md:p-4 lg:p-6">
+      <div className="">
         <div className="">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Event Setup</h2>
           <p className="text-gray-400">
@@ -161,10 +203,17 @@ const FormPage = () => {
                 formik={formik as unknown as FormikProps<FormValues>}
                 handleNext={handleNext}
                 handlePrevious={handlePrevious}
+                isSubmitting={isLoading}
               />
             </div>
           </div>
-          <Sidebar step={step} handleNext={handleNext} handleSubmit={formik.handleSubmit} handlePrevious={handlePrevious} />
+          <Sidebar 
+            step={step} 
+            handleNext={handleNext} 
+            handleSubmit={formik.handleSubmit} 
+            handlePrevious={handlePrevious}
+            isSubmitting={isLoading}
+          />
         </div>
         <EventPreview />
       </div>

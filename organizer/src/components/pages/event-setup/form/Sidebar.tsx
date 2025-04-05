@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 
@@ -7,9 +8,10 @@ interface SidebarProps {
   handleNext: () => void;
   handleSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
   handlePrevious: () => void;
+  isSubmitting: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ step, totalSteps = 5, handleNext, handleSubmit, handlePrevious }) => {
+const Sidebar: React.FC<SidebarProps> = ({ step, totalSteps = 5, handleNext, handleSubmit, handlePrevious, isSubmitting }) => {
   const progress = (step / totalSteps) * 100;
 
   return (

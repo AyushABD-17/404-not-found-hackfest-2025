@@ -142,15 +142,19 @@ export const step5Schema = Yup.object().shape({
     }
   ),
 
-  AlertRecipients: Yup.array().of(
-    Yup.object().shape({
-      name: Yup.string().required("Name is required"),
-      role: Yup.string().required("Role is required"),
-      email: Yup.string().email("Invalid email").required("Email is required"),
-      isPrimary: Yup.boolean(),
-      isEditing: Yup.boolean()
-    })
-  ).min(1, "At least one recipient is required")
+  AlertRecipients: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        role: Yup.string().required("Role is required"),
+        email: Yup.string().email("Invalid email").required("Email is required"),
+        isPrimary: Yup.boolean(),
+      })
+    )
+    .min(1, "At least one recipient is required")
+    .test("hasPrimary", "At least one recipient must be marked as primary", function (recipients) {
+      return recipients?.some(recipient => recipient.isPrimary) || false;
+    }),
 });
 
 
