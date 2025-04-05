@@ -4,9 +4,12 @@ import pandas as pd
 import tensorflow as tf
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 import numpy as np
+import os
+from dotenv import load_dotenv
 
-# Replace with Bearer Token
-BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAGhm0QEAAAAALY3SXW1R2UsGLzz9vccYERGeXnk%3DRsFBz2KScxlB9rFDYNKiryiVcRJ8vshO5TC9iNQWXrK2F1Qei2"
+# Load environment variables
+load_dotenv()
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
 # Initialize the Tweepy client
 client = tweepy.Client(bearer_token=BEARER_TOKEN, wait_on_rate_limit=True)
@@ -54,7 +57,7 @@ def predict_sentiment(text):
     return label_map[np.argmax(probabilities)], probabilities[np.argmax(probabilities)]
 
 # Fetch tweets
-tweets = fetch_tweets("stockmarketcrash", count=10) # Example
+tweets = fetch_tweets("War2", count=10)
 
 # Process tweets and predict sentiment
 data = []
