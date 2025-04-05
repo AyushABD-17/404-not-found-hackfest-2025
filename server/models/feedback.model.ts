@@ -2,11 +2,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 
 // Interface for feedback
 export interface IFeedback extends Document {
-  session: {
-    _id: Types.ObjectId;
-    name: string;
-    event: Types.ObjectId;
-  };
+  event: Types.ObjectId;
   contentQualityRating: number;
   likedMost?: string;
   suggestions?: string;
@@ -21,20 +17,10 @@ export interface IFeedback extends Document {
 // Feedback schema
 const FeedbackSchema = new Schema<IFeedback>(
   {
-    session: {
-      _id: {
-        type: Schema.Types.ObjectId,
-        required: [true, 'Session ID is required'],
-      },
-      name: {
-        type: String,
-        required: [true, 'Session name is required'],
-      },
-      event: {
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
-        required: [true, 'Event ID is required'],
-      },
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+      required: [true, 'Event ID is required'],
     },
     contentQualityRating: {
       type: Number,
@@ -70,8 +56,7 @@ const FeedbackSchema = new Schema<IFeedback>(
 );
 
 // Create indexes for better query performance
-FeedbackSchema.index({ 'session.event': 1 });
-FeedbackSchema.index({ 'session._id': 1 });
+FeedbackSchema.index({ event: 1 });
 FeedbackSchema.index({ submittedBy: 1 });
 FeedbackSchema.index({ status: 1 });
 FeedbackSchema.index({ createdAt: 1 });
