@@ -20,17 +20,16 @@ export const createFeedback = CatchAsyncError(async (req: Request, res: Response
 
 // Get all feedback with filters
 export const getAllFeedback = CatchAsyncError(async (req: Request, res: Response) => {
-  const { event, session, status, isAnonymous } = req.query;
+  const { event, status, isAnonymous } = req.query;
   const filter: any = {};
 
-  if (event) filter['session.event'] = event;
-  if (session) filter['session._id'] = session;
+  if (event) filter.event = event;
   if (status) filter.status = status;
   if (isAnonymous !== undefined) filter.isAnonymous = isAnonymous === 'true';
 
   const feedback = await Feedback.find(filter)
     .populate('submittedBy', 'name email')
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -43,7 +42,7 @@ export const getAllFeedback = CatchAsyncError(async (req: Request, res: Response
 export const getFeedbackById = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
   const feedback = await Feedback.findById(req.params.id)
     .populate('submittedBy', 'name email')
-    .populate('session.event', 'name');
+    .populate('event', 'name');
 
   if (!feedback) {
     return next(new ErrorHandler('Feedback not found', 404));
@@ -137,7 +136,7 @@ export const submitFeedback = CatchAsyncError(async (req: Request, res: Response
 // Get user's feedback
 export const getUserFeedback = CatchAsyncError(async (req: Request, res: Response) => {
   const feedback = await Feedback.find({ submittedBy: req.user?._id })
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -154,25 +153,7 @@ export const getEventFeedback = CatchAsyncError(async (req: Request, res: Respon
     return next(new ErrorHandler('Invalid event ID', 400));
   }
 
-  const feedback = await Feedback.find({ 'session.event': eventId })
-    .populate('submittedBy', 'name email')
-    .sort({ createdAt: -1 });
-
-  res.status(200).json({
-    success: true,
-    feedback,
-  });
-});
-
-// Get feedback for a specific session
-export const getSessionFeedback = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
-  const { sessionId } = req.params;
-
-  if (!Types.ObjectId.isValid(sessionId)) {
-    return next(new ErrorHandler('Invalid session ID', 400));
-  }
-
-  const feedback = await Feedback.find({ 'session._id': sessionId })
+  const feedback = await Feedback.find({ event: eventId })
     .populate('submittedBy', 'name email')
     .sort({ createdAt: -1 });
 
@@ -185,7 +166,7 @@ export const getSessionFeedback = CatchAsyncError(async (req: Request, res: Resp
 // Get anonymous feedback
 export const getAnonymousFeedback = CatchAsyncError(async (req: Request, res: Response) => {
   const feedback = await Feedback.find({ isAnonymous: true })
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -198,7 +179,7 @@ export const getAnonymousFeedback = CatchAsyncError(async (req: Request, res: Re
 export const getNonAnonymousFeedback = CatchAsyncError(async (req: Request, res: Response) => {
   const feedback = await Feedback.find({ isAnonymous: false })
     .populate('submittedBy', 'name email')
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -218,7 +199,7 @@ export const getFeedbackByRating = CatchAsyncError(async (req: Request, res: Res
 
   const feedback = await Feedback.find({ contentQualityRating: ratingNum })
     .populate('submittedBy', 'name email')
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -238,7 +219,7 @@ export const getFeedbackByLikedMost = CatchAsyncError(async (req: Request, res: 
 
   const feedback = await Feedback.find({ likedMost })
     .populate('submittedBy', 'name email')
-    .populate('session.event', 'name')
+    .populate('event', 'name')
     .sort({ createdAt: -1 });
 
   res.status(200).json({

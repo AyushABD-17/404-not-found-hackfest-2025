@@ -12,6 +12,7 @@ import { accessTokenOptions, refreshTokenOptions } from "./utils/jwt";
 import eventRoutes from './routes/event.route';
 import issueRouter from './routes/issue.route';
 import feedbackRouter from './routes/feedback.route';
+import shortFeedbackRouter from './routes/shortFeedback.route';
 app.use(express.json({ limit: "50mb" }));
 
 app.use((req, res, next) => {
@@ -51,6 +52,7 @@ app.use("/api/v1", userRouter);
 app.use('/api/v1/events', eventRoutes);
 app.use('/api/v1/issue', issueRouter);
 app.use('/api/v1/feedback', feedbackRouter);
+app.use('/api/v1/short-feedback', shortFeedbackRouter);
 
 //google auth route
 app.get(
