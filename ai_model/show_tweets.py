@@ -1,7 +1,7 @@
 import tweepy
 import time
 
-# Replace with your actual free-tier Bearer Token
+# Replace with Bearer Token
 BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAGhm0QEAAAAALY3SXW1R2UsGLzz9vccYERGeXnk%3DRsFBz2KScxlB9rFDYNKiryiVcRJ8vshO5TC9iNQWXrK2F1Qei2"
 
 # Initialize the client with automatic rate limit waiting enabled
@@ -26,7 +26,7 @@ def fetch_tweets(hashtag, count=10):
                 return []
             return response.data
         except tweepy.TooManyRequests as e:
-            # Get the reset time from response headers; default to 15 minutes if not provided.
+            # Get the reset time - 15 minutes
             reset_timestamp = int(e.response.headers.get("x-rate-limit-reset", time.time() + 900))
             sleep_duration = max(reset_timestamp - int(time.time()), 60)
             print(f"Rate limit exceeded. Sleeping for {sleep_duration} seconds.")

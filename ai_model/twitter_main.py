@@ -5,7 +5,7 @@ import tensorflow as tf
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 import numpy as np
 
-# Replace with your actual free-tier Bearer Token
+# Replace with Bearer Token
 BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAGhm0QEAAAAALY3SXW1R2UsGLzz9vccYERGeXnk%3DRsFBz2KScxlB9rFDYNKiryiVcRJ8vshO5TC9iNQWXrK2F1Qei2"
 
 # Initialize the Tweepy client
@@ -54,7 +54,7 @@ def predict_sentiment(text):
     return label_map[np.argmax(probabilities)], probabilities[np.argmax(probabilities)]
 
 # Fetch tweets
-tweets = fetch_tweets("stockmarketcrash", count=10)
+tweets = fetch_tweets("stockmarketcrash", count=10) # Example
 
 # Process tweets and predict sentiment
 data = []
