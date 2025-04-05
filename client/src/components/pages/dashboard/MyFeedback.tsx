@@ -73,6 +73,7 @@ const MyFeedback: React.FC = () => {
   );
   const latestEvent = eventsData && eventsData.data[0];
   console.log(latestEvent);
+  console.log(latestEvent?.eventId._id);
 
   const feedbackHero = {
     title: latestEvent ? `Feedback for ${latestEvent.eventId.name}` : 'Your Feedback Matters',
@@ -130,14 +131,14 @@ const MyFeedback: React.FC = () => {
       time: "5m ago",
       comment: "Loving the tech demos at #TechConf2023! So inspiring to see what's coming next.",
       likes: 12,
-      imageUrl: "https://images.unsplash.com/photo-1484981138541-3d074aa97716?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8Mnx8ZmVlZGJhY2tjZW50ZXIlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjk1NHww&ixlib=rb-4.0.3&q=80&w=1080?q=80",
+      imageUrl: "",
     },
     {
       user: "James Wilson",
       time: "18m ago",
       comment: "The speakers at #TechConf2023 are absolutely crushing it! So much valuable knowledge.",
       likes: 8,
-      imageUrl: "https://images.unsplash.com/photo-1425421669292-0c3da3b8f529?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8M3x8ZmVlZGJhY2tjZW50ZXIlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjk1NHww&ixlib=rb-4.0.3&q=80&w=1080?q=80",
+      imageUrl: "",
     },
   ];
 
@@ -439,8 +440,11 @@ const MyFeedback: React.FC = () => {
           </form>
         </div>
       </div> */}
-
-      <FeedbackForm id={latestEvent?.eventId._id}/>
+{
+  latestEvent && (
+    <FeedbackForm id={latestEvent?.eventId._id}/>
+  )
+}
 
       {/* Your Previous Feedback */}
       <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
@@ -505,11 +509,7 @@ const MyFeedback: React.FC = () => {
                   src={sentiment.imageUrl}
                   alt={index === 0 ? "Woman with coffee cup" : "Man in business suit"}
                   className="w-10 h-10 rounded-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = "https://placehold.co/100x100";
-                  }}
+                  
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between">

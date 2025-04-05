@@ -1,8 +1,6 @@
 // components/FeedbackForm.tsx
 'use client';
-
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import { useGetFeedbackFormQuery, useSubmitFeedbackResponseMutation } from '@/redux/features/api/event/eventApi';
 import { useSelector } from 'react-redux';
 
@@ -87,7 +85,7 @@ console.log(id);
   const { title, description, formFields, eventId, isAnonymous } = feedbackData.feedback;
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className=" p-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white mb-2">{title || 'Feedback Form'}</h1>
         <p className="text-gray-400">{description || `Feedback for ${eventId.name}`}</p>
