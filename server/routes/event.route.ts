@@ -52,4 +52,13 @@ router.get("/search",
     // authorizeRoles("client"), 
     EventController.searchEvents);
 
+
+router.post("/connect-to-user", 
+    // authorizeRoles("client"), 
+    EventController.connectEventToUser);
+
+router.get("/user/:userId", 
+    // authorizeRoles("client"), 
+    EventController.getEventsByUserId);
+
 export default router;

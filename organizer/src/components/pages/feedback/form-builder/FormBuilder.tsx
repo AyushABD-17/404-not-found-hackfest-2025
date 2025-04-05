@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { useSearchParams } from 'next/navigation';
+import { useCreateFeedbackMutation, useUpdateFeedbackMutation, useGetFeedbackByIdQuery } from '@/redux/features/api/feedback/feedbackApi';
+import { useGetEventsByUserIdQuery } from '@/redux/features/api/event/eventApi';
+import { useSelector } from 'react-redux';
 
 interface FormField {
   id: string;
@@ -13,21 +17,64 @@ interface FormField {
   tags?: string[];
 }
 
-interface FormBuilderProps {
-  onSave: (form: { title: string; description: string; fields: FormField[] }) => void;
-}
+const FormBuilder = () => {
+  const searchParams = useSearchParams();
+  const eventIdFromParams = searchParams.get('eventId');
+  const feedbackId = searchParams.get('feedbackId');
+  const { user } = useSelector((state: any) => state.auth);
+  console.log('User:', user);
 
-const FormBuilder: React.FC<FormBuilderProps> = ({ onSave }) => {
+  const [createFeedback, { isLoading: isCreating, isSuccess: createSuccess, error: createError }] = useCreateFeedbackMutation();
+  const [updateFeedback, { isLoading: isUpdating, isSuccess: updateSuccess, error: updateError }] = useUpdateFeedbackMutation();
+  const { data: existingFeedback, isLoading: isLoadingFeedback } = useGetFeedbackByIdQuery(feedbackId || '', {
+    skip: !feedbackId,
+  });
+  const { data: eventsResponse, isLoading: isLoadingEvents, error: eventsError } = useGetEventsByUserIdQuery(user?._id, {
+    skip: !user?._id,
+  });
+  const events = eventsResponse?.data;
+  console.log('Events:', events);
+
   const [formTitle, setFormTitle] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [fields, setFields] = useState<FormField[]>([]);
   const [isAddingField, setIsAddingField] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+
+  // Load existing feedback if editing
+  useEffect(() => {
+    if (existingFeedback && feedbackId) {
+      setFormTitle(existingFeedback.title || '');
+      setFormDescription(existingFeedback.description || '');
+      const loadedFields = Object.values(existingFeedback.formFields || {}).map((fieldData: any) => ({
+        id: fieldData.field.id,
+        type: fieldData.field.type,
+        label: fieldData.field.label,
+        required: fieldData.field.required,
+        options: fieldData.field.options,
+        placeholder: fieldData.field.placeholder,
+        tags: fieldData.field.tags,
+      }));
+      setFields(loadedFields);
+      setSelectedEventId(existingFeedback.eventId.toString());
+    }
+  }, [existingFeedback, feedbackId]);
+
+  // Set selected event from URL params once events are loaded
+  useEffect(() => {
+    if (events && eventIdFromParams && !selectedEventId) {
+      const eventExists = events.some((event: any) => event._id === eventIdFromParams);
+      if (eventExists) {
+        setSelectedEventId(eventIdFromParams);
+      }
+    }
+  }, [events, eventIdFromParams, selectedEventId]);
 
   const handleAddField = (type: FormField['type']) => {
     const newField: FormField = {
       id: `field-${Date.now()}`,
       type,
-      label: '',
+      label: `New ${type} Field`, // Provide a default label to satisfy schema
       required: false,
       options: type === 'multiSelect' ? ['Option 1'] : undefined,
       placeholder: type === 'text' ? 'Enter your answer' : undefined,
@@ -50,27 +97,108 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ onSave }) => {
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-
     const items = Array.from(fields);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
     setFields(items);
   };
 
-  const handleSave = () => {
-    onSave({
+  const handleSave = async () => {
+    if (!selectedEventId || !user?._id) {
+      alert('Please select an event and ensure you are logged in before saving');
+      return;
+    }
+
+    // Validate that all fields have labels
+    const invalidFields = fields.filter(field => !field.label.trim());
+    if (invalidFields.length > 0) {
+      alert('All fields must have a label before saving');
+      return;
+    }
+
+    const formFields = fields.reduce((acc, field) => {
+      acc[field.id] = {
+        value: null,
+        field: {
+          id: field.id,
+          type: field.type,
+          label: field.label,
+          required: field.required,
+          options: field.options,
+          placeholder: field.placeholder,
+          tags: field.tags,
+        },
+      };
+      return acc;
+    }, {} as Record<string, any>);
+
+    
+    const feedbackData = {
+      eventId: selectedEventId,
+      submittedBy: user._id.toString(), // Ensure it's a string
+      isAnonymous: fields.some(f => f.type === 'anonymous'),
+      formFields,
+      status: 'draft' as const,
       title: formTitle,
       description: formDescription,
-      fields,
-    });
+    };
+
+    try {
+      if (feedbackId) {
+        await updateFeedback({ id: feedbackId, ...feedbackData }).unwrap();
+        alert('Form updated successfully!');
+      } else {
+        await createFeedback(feedbackData).unwrap();
+        alert('Form saved successfully!');
+      }
+    } catch (err) {
+      console.error('Error saving form:', err);
+      alert('Error saving form: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    }
   };
+
+  // Loading state for events or feedback
+  if (isLoadingEvents || (feedbackId && isLoadingFeedback)) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
+
+  // Error state for events
+  if (eventsError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-500">Error loading events. Please try again later.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold mb-2">Form Builder</h1>
         <p className="text-gray-400">Create a custom feedback form with various input types</p>
+      </div>
+
+      {/* Event Selector */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Select an Event
+        </label>
+        <select
+          value={selectedEventId || ''}
+          onChange={(e) => setSelectedEventId(e.target.value)}
+          className="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        >
+          <option value="">Choose an event</option>
+          {events?.map((event: any) => (
+            <option key={event._id} value={event._id}>
+              {event.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="space-y-6">
@@ -325,12 +453,17 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ onSave }) => {
 
           <button
             onClick={handleSave}
-            className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm transition-colors flex items-center gap-2"
+            disabled={isCreating || isUpdating}
+            className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Save Form
+            {(isCreating || isUpdating) ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+            {feedbackId ? 'Update Form' : 'Save Form'}
           </button>
         </div>
       </div>
@@ -338,4 +471,4 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ onSave }) => {
   );
 };
 
-export default FormBuilder; 
+export default FormBuilder;

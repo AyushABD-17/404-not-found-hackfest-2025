@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import Event from '../models/event.model';
+import Event, { EventUserConnection } from '../models/event.model';
 import { Types } from 'mongoose';
+import UserModel from '../models/user.model';
+import mongoose from 'mongoose';
 
 class EventController {
   /**
@@ -317,8 +319,77 @@ class EventController {
 
   async getEventById(req: Request, res: Response) {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid event ID' });
+    }
     const event = await Event.findById(id);
     res.status(200).json(event);
+  }
+
+  async connectEventToUser(req: Request, res: Response) {
+    try {
+      const { eventId, userId } = req.body;
+      if (!eventId || !userId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Event ID and User ID are required'
+        });
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(eventId) || !mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid Event ID or User ID'
+        });
+      }
+
+      const event = await Event.findById(eventId);
+      const user = await UserModel.findById(userId);
+      
+      if (!event || !user) {
+        return res.status(404).json({
+          success: false,
+          message: 'Event or user not found'
+        });
+      }
+
+      const eventUserConnection = await EventUserConnection.create({ eventId, userId });
+      
+      res.status(200).json({
+        success: true,
+        message: 'Event connected to user successfully',
+        data: eventUserConnection
+      });
+    } catch (error) {
+      console.error('[ERROR] connectEventToUser:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  }
+
+  async getEventsByUserId(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId;
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: 'Invalid user ID' });
+      }
+
+      const events = await EventUserConnection.find({ userId})
+        .populate('eventId')
+        .populate('userId');
+
+        return res.status(200).json({
+          success: true,
+          message: 'Events fetched successfully',
+          data: events
+        });
+    } catch (error) {
+      console.error('[ERROR]', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
 }
 

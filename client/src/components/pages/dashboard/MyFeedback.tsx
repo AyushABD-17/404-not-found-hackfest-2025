@@ -1,13 +1,82 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { useGetEventsByUserIdQuery } from '@/redux/features/api/event/eventApi';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+interface Event {
+  _id: string;
+  eventId: {
+    _id: string;
+    name: string;
+    venue: string;
+    location: string;
+    description: string;
+    startDate: string;
+    endDate: string;
+    expectedAttendees: number;
+    id: string;
+  };
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface FeedbackForm {
+  sessionId: string;
+  rating: number;
+  likedAspects: string[];
+  suggestions: string;
+  hashtags: string;
+  isAnonymous: boolean;
+}
+
+interface FormErrors {
+  sessionId?: string;
+  rating?: string;
+  suggestions?: string;
+}
+
+const feedbackSchema = Yup.object().shape({
+  sessionId: Yup.string().required('Please select a session'),
+  rating: Yup.number().min(1, 'Please provide a rating').required('Please provide a rating'),
+  suggestions: Yup.string().required('Please provide your suggestions'),
+  hashtags: Yup.string(),
+  isAnonymous: Yup.boolean(),
+  likedAspects: Yup.array().of(Yup.string())
+});
 
 const MyFeedback: React.FC = () => {
+  const [showQuickFeedback, setShowQuickFeedback] = useState(false);
+  const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
+  const [quickComment, setQuickComment] = useState('');
+  const [selectedLikedAspects, setSelectedLikedAspects] = useState<string[]>([]);
+
+  const { user } = useSelector((state: any) => state.auth);
+
+
+  const { data: eventsData, isLoading, isError } = useGetEventsByUserIdQuery(
+    user?._id || '',
+    {
+      skip: !user?._id
+    }
+  );
+  const latestEvent = eventsData && eventsData.data[0];
+
   const feedbackHero = {
-    title: "How's Your Experience?",
-    description: "Your feedback helps us improve and create better experiences for everyone.",
-    imageUrl: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8MXx8ZmVlZGJhY2tjZW50ZXIlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjk1NHww&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-   
+    title: latestEvent ? `Feedback for ${latestEvent.eventId.name}` : 'Your Feedback Matters',
+    description: latestEvent 
+      ? `Share your thoughts about ${latestEvent.eventId.name} at ${latestEvent.eventId.venue}`
+      : 'Help us improve by sharing your experience',
+    imageUrl: 'https://placehold.co/600x400',
   };
 
   const quickReactions = [
@@ -69,6 +138,45 @@ const MyFeedback: React.FC = () => {
     },
   ];
 
+  const formik = useFormik({
+    initialValues: {
+      sessionId: '',
+      rating: 0,
+      likedAspects: [],
+      suggestions: '',
+      hashtags: '',
+      isAnonymous: false
+    },
+    validationSchema: feedbackSchema,
+    onSubmit: (values) => {
+      // TODO: Implement feedback submission
+      console.log('Form submitted:', values);
+      formik.resetForm();
+      setSelectedLikedAspects([]);
+    }
+  });
+
+  const handleQuickFeedbackSubmit = () => {
+    // TODO: Implement quick feedback submission
+    setShowQuickFeedback(false);
+    setSelectedReaction(null);
+    setQuickComment('');
+  };
+
+  const handleRatingChange = (rating: number) => {
+    formik.setFieldValue('rating', rating);
+  };
+
+  const handleLikedAspectToggle = (aspect: string) => {
+    setSelectedLikedAspects(prev => {
+      const newAspects = prev.includes(aspect)
+        ? prev.filter(a => a !== aspect)
+        : [...prev, aspect];
+      formik.setFieldValue('likedAspects', newAspects);
+      return newAspects;
+    });
+  };
+
   return (
     <div id="feedbackCenter" className="page-section min-h-screen p-4 md:p-6 lg:p-8 ">
       {/* Header */}
@@ -78,71 +186,89 @@ const MyFeedback: React.FC = () => {
       </div>
 
       {/* Feedback Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-8 relative">
-        <div className="md:flex">
-          <div className="p-6 md:w-2/3 text-white z-10 relative">
-            <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs mb-3 backdrop-blur-sm">
-              YOUR VOICE MATTERS
+      {latestEvent ? (
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl overflow-hidden shadow-lg mb-8 relative">
+          <div className="md:flex">
+            <div className="p-6 md:w-2/3 text-white z-10 relative">
+              <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs mb-3 backdrop-blur-sm">
+                YOUR VOICE MATTERS
+              </div>
+              <h2 className="text-xl md:text-2xl font-bold mb-2">{feedbackHero.title}</h2>
+              <p className="mb-4">{feedbackHero.description}</p>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <button 
+                  onClick={() => setShowQuickFeedback(true)}
+                  className="inline-flex items-center px-4 py-2 bg-white text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-50 transition duration-200"
+                >
+                  Give Quick Feedback
+                </button>
+                <button className="inline-flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium backdrop-blur-sm transition duration-200">
+                  See My Previous Feedback
+                </button>
+              </div>
             </div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2">{feedbackHero.title}</h2>
-            <p className="mb-4">{feedbackHero.description}</p>
-            <div className="flex flex-wrap gap-3 mt-4">
-              <button className="inline-flex items-center px-4 py-2 bg-white text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-50 transition duration-200">
-                Give Quick Feedback
-              </button>
-              <button className="inline-flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium backdrop-blur-sm transition duration-200">
-                See My Previous Feedback
-              </button>
+            <div className="md:w-1/3 relative h-48 md:h-auto">
+              <img
+                src={feedbackHero.imageUrl}
+                alt="Professional looking person in business attire"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = "https://placehold.co/600x400";
+                }}
+              />
+              <div className="absolute inset-0 bg-indigo-900/20"></div>
             </div>
-          </div>
-          <div className="md:w-1/3 relative h-48 md:h-auto">
-            <img
-              src={feedbackHero.imageUrl}
-              alt="Professional looking person in business attire"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.onerror = null;
-                target.src = "https://placehold.co/600x400";
-              }}
-            />
-            <div className="absolute inset-0 bg-indigo-900/20"></div>
           </div>
         </div>
-      </div>
+      ) : null}
 
-      {/* Quick Reaction Section */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
-        <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
-          <h2 className="text-lg font-bold text-white">Quick Reaction</h2>
-          <p className="text-sm text-gray-400">How are you feeling about the keynote presentation?</p>
-        </div>
-        <div className="p-5">
-          <div className="grid grid-cols-5 gap-2 mb-5">
-            {quickReactions.map((reaction, index) => (
-              <button
-                key={index}
-                className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 transition duration-200 flex flex-col items-center"
-              >
-                <span className="text-4xl mb-1">{reaction.emoji}</span>
-                <span className="text-xs text-gray-300">{reaction.label}</span>
-              </button>
-            ))}
-          </div>
-          <div className="mt-4">
+      {/* Quick Feedback Dialog */}
+      {showQuickFeedback && 
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-white mb-4">Quick Feedback</h3>
+            <div className="grid grid-cols-5 gap-2 mb-5">
+              {quickReactions.map((reaction, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedReaction(reaction.emoji)}
+                  className={`p-3 rounded-lg transition duration-200 flex flex-col items-center ${
+                    selectedReaction === reaction.emoji
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                  }`}
+                >
+                  <span className="text-4xl mb-1">{reaction.emoji}</span>
+                  <span className="text-xs">{reaction.label}</span>
+                </button>
+              ))}
+            </div>
             <input
               type="text"
+              value={quickComment}
+              onChange={(e) => setQuickComment(e.target.value)}
               placeholder="Add a quick comment (optional)"
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white placeholder-gray-400"
+              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 mb-4"
             />
-          </div>
-          <div className="mt-4 flex justify-end">
-            <button className="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition duration-200">
-              Submit Reaction
-            </button>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowQuickFeedback(false)}
+                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleQuickFeedbackSubmit}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      }
 
       {/* Detailed Feedback Form */}
       <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
@@ -151,21 +277,31 @@ const MyFeedback: React.FC = () => {
           <p className="text-sm text-gray-400">Help us improve with your specific thoughts</p>
         </div>
         <div className="p-5">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="event" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="sessionId" className="block text-sm font-medium text-gray-300 mb-1">
                 Which session are you reviewing?
               </label>
               <select
-                id="event"
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white"
+                id="sessionId"
+                name="sessionId"
+                value={formik.values.sessionId}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-4 py-3 bg-gray-700 border ${
+                  formik.touched.sessionId && formik.errors.sessionId ? 'border-red-500' : 'border-gray-600'
+                } rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white`}
               >
-                {sessionOptions.map((option, index) => (
-                  <option key={index} selected={index === 0}>
-                    {option}
+                <option value="">Select a session</option>
+                {eventsData?.data?.map((session: any) => (
+                  <option key={session.eventId._id} value={session.eventId._id}>
+                    {session.eventId.name}
                   </option>
                 ))}
               </select>
+              {formik.touched.sessionId && formik.errors.sessionId && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.sessionId}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -179,7 +315,12 @@ const MyFeedback: React.FC = () => {
                     <button
                       key={index}
                       type="button"
-                      className="p-1 text-gray-600 hover:text-yellow-400"
+                      onClick={() => handleRatingChange(index + 1)}
+                      className={`p-1 ${
+                        formik.values.rating > index
+                          ? 'text-yellow-400'
+                          : 'text-gray-600 hover:text-yellow-400'
+                      }`}
                     >
                       <svg
                         className="w-8 h-8"
@@ -192,6 +333,9 @@ const MyFeedback: React.FC = () => {
                     </button>
                   ))}
               </div>
+              {formik.touched.rating && formik.errors.rating && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.rating}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -203,7 +347,12 @@ const MyFeedback: React.FC = () => {
                   <button
                     key={index}
                     type="button"
-                    className="px-3 py-1.5 border border-gray-600 rounded-full text-sm text-gray-300 hover:bg-purple-900/30 hover:border-purple-500 transition duration-200"
+                    onClick={() => handleLikedAspectToggle(option)}
+                    className={`px-3 py-1.5 border rounded-full text-sm transition duration-200 ${
+                      selectedLikedAspects.includes(option)
+                        ? 'bg-purple-600 border-purple-500 text-white'
+                        : 'border-gray-600 text-gray-300 hover:bg-purple-900/30 hover:border-purple-500'
+                    }`}
                   >
                     {option}
                   </button>
@@ -217,10 +366,19 @@ const MyFeedback: React.FC = () => {
               </label>
               <textarea
                 id="suggestions"
+                name="suggestions"
+                value={formik.values.suggestions}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 rows={3}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white placeholder-gray-400"
+                className={`w-full px-4 py-3 bg-gray-700 border ${
+                  formik.touched.suggestions && formik.errors.suggestions ? 'border-red-500' : 'border-gray-600'
+                } rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 text-white placeholder-gray-400`}
                 placeholder="Share your thoughts here..."
               />
+              {formik.touched.suggestions && formik.errors.suggestions && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.suggestions}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -235,6 +393,8 @@ const MyFeedback: React.FC = () => {
                   type="text"
                   id="hashtags"
                   name="hashtags"
+                  value={formik.values.hashtags}
+                  onChange={formik.handleChange}
                   className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
                   placeholder="TechConf2023, Inspiring, Future"
                 />
@@ -244,7 +404,10 @@ const MyFeedback: React.FC = () => {
             <div className="flex items-center mb-4">
               <input
                 id="anonymous"
+                name="isAnonymous"
                 type="checkbox"
+                checked={formik.values.isAnonymous}
+                onChange={formik.handleChange}
                 className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 rounded bg-gray-700"
               />
               <label htmlFor="anonymous" className="ml-2 block text-sm text-gray-300">
@@ -255,9 +418,13 @@ const MyFeedback: React.FC = () => {
             <div className="flex justify-end">
               <button
                 type="button"
+                onClick={() => {
+                  formik.resetForm();
+                  setSelectedLikedAspects([]);
+                }}
                 className="mr-3 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-sm font-medium transition duration-200"
               >
-                Save Draft
+                Clear Form
               </button>
               <button
                 type="submit"

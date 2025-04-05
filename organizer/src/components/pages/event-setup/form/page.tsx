@@ -10,7 +10,7 @@ import EventPreview from "./EventPreview";
 import { useCreateEventMutation } from "@/redux/features/api/event/eventApi";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-
+import { useSelector } from "react-redux";
 export interface FormValues {
   EventName: string;
   Venue: string;
@@ -40,6 +40,8 @@ export interface FormValues {
 }
 
 const FormPage = () => {
+  
+  const { user } = useSelector((state: any) => state.auth);
   const { theme } = useTheme();
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -96,7 +98,7 @@ const FormPage = () => {
           startDate: values.StartDate,
           endDate: values.EndDate,
           expectedAttendees: parseInt(values.ExpectedAttendees),
-          clientId: "67f04778f2b74ad885dea60d",
+          clientId: user?._id,
           sentimentTracking: {
             positiveThreshold: parseInt(values.PositiveThreshold),
             negativeThreshold: parseInt(values.NegativeThreshold),

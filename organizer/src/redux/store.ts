@@ -9,6 +9,7 @@ import eventSlice from "./features/api/event/eventSlice";
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
+    
     auth: authSlice,
     event: eventSlice,
   },

@@ -1,80 +1,85 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
+interface IFormField {
+  id: string;
+  type: 'text' | 'rating' | 'multiSelect' | 'hashtags' | 'anonymous';
+  label: string;
+  required: boolean;
+  options?: string[];
+  placeholder?: string;
+  tags?: string[];
+}
+
 // Interface for feedback
 export interface IFeedback extends Document {
-  session: {
-    _id: Types.ObjectId;
-    name: string;
-    event: Types.ObjectId;
-  };
-  contentQualityRating: number;
-  likedMost?: string;
-  suggestions?: string;
-  hashtags?: string[];
+  eventId: Types.ObjectId;
+  submittedBy: Types.ObjectId;
   isAnonymous: boolean;
-  submittedBy?: Types.ObjectId;
+  formFields: {
+    [key: string]: {
+      value: any;
+      field: IFormField;
+    };
+  };
   status: 'draft' | 'submitted';
   createdAt: Date;
   updatedAt: Date;
 }
 
+const FormFieldSchema = new Schema({
+  id: { type: String, required: true },
+  type: { 
+    type: String, 
+    required: true,
+    enum: ['text', 'rating', 'multiSelect', 'hashtags', 'anonymous']
+  },
+  label: { type: String, required: true },
+  required: { type: Boolean, default: false },
+  options: [{ type: String }],
+  placeholder: String,
+  tags: [{ type: String }]
+});
+
 // Feedback schema
 const FeedbackSchema = new Schema<IFeedback>(
   {
-    session: {
-      _id: {
-        type: Schema.Types.ObjectId,
-        required: [true, 'Session ID is required'],
-      },
-      name: {
-        type: String,
-        required: [true, 'Session name is required'],
-      },
-      event: {
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
-        required: [true, 'Event ID is required'],
-      },
-    },
-    contentQualityRating: {
-      type: Number,
-      required: [true, 'Content quality rating is required'],
-      min: [1, 'Rating must be at least 1'],
-      max: [5, 'Rating cannot exceed 5'],
-    },
-    likedMost: {
-      type: String,
-      enum: ['Content', 'Speaker', 'Interactivity', 'Visuals', 'Q&A', 'Length'],
-    },
-    suggestions: {
-      type: String,
-      maxlength: [1000, 'Suggestions cannot exceed 1000 characters'],
-    },
-    hashtags: [String],
-    isAnonymous: {
-      type: Boolean,
-      default: false,
+    eventId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+      required: true,
     },
     submittedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
+    },
+    isAnonymous: {
+      type: Boolean,
+      default: false,
+    },
+    formFields: {
+      type: Map,
+      of: new Schema({
+        value: Schema.Types.Mixed,
+        field: FormFieldSchema
+      }),
+      required: true
     },
     status: {
       type: String,
       enum: ['draft', 'submitted'],
       default: 'draft',
-      required: [true, 'Status is required'],
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 // Create indexes for better query performance
-FeedbackSchema.index({ 'session.event': 1 });
-FeedbackSchema.index({ 'session._id': 1 });
+FeedbackSchema.index({ eventId: 1, sessionId: 1 });
 FeedbackSchema.index({ submittedBy: 1 });
 FeedbackSchema.index({ status: 1 });
-FeedbackSchema.index({ createdAt: 1 });
 
 const Feedback = model<IFeedback>('Feedback', FeedbackSchema);
 

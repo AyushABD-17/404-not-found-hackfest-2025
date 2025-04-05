@@ -350,6 +350,33 @@ EventSchema.pre('save', function(next) {
   next();
 });
 
+
+interface IEventUserConnection extends Document {
+  eventId: Types.ObjectId;
+  userId: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const EventUserConnectionSchema = new Schema<IEventUserConnection>(
+  {
+    eventId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+      required: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+
 // Ensure at least one recipient is marked as primary
 EventSchema.pre('save', function(next) {
   if (this.alertRecipients.length > 0 && 
@@ -360,5 +387,5 @@ EventSchema.pre('save', function(next) {
 });
 
 const Event = model<IEvent>('Event', EventSchema);
-
+export const EventUserConnection = model<IEventUserConnection>('EventUserConnection', EventUserConnectionSchema);
 export default Event; 

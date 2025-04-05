@@ -58,6 +58,24 @@ export const eventApi = apiSlice.injectEndpoints({
           }
         },
       }),
+
+
+      getEventsByUserId: builder.query({
+        query: (userId: string) => ({
+          url: `events/user/${userId}`,
+          method: "GET",
+        }),
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const result = await queryFulfilled;
+            return result.data;
+          } catch (error: any) {
+            console.log(error);
+          }
+        },
+      }),
+
+      
   }),
 });
 
@@ -65,5 +83,5 @@ export const {
   useGetEventsQuery,
   useCreateEventMutation,
   useGetEventsByIdQuery,
- 
+  useGetEventsByUserIdQuery,
 } = eventApi;

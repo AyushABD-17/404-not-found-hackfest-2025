@@ -1,26 +1,23 @@
 import express from "express";
 import { isAuthenticate, authorizeRoles } from "../middleware/auth";
-import {
-  createFeedback,
+import { 
   getAllFeedback,
   getFeedbackById,
-  updateFeedback,
-  deleteFeedback,
-  submitFeedback,
-  getUserFeedback,
-  getEventFeedback,
-  getSessionFeedback,
   getAnonymousFeedback,
+  updateFeedback,
   getNonAnonymousFeedback,
-  getFeedbackByRating,
-  getFeedbackByLikedMost,
+  createFeedback,
+  getEventFeedback,
+  getUserFeedback,
+  submitFeedback,
+  deleteFeedback
 } from "../controllers/feedback.controller";
 
 const feedbackRouter = express.Router();
 
 // Create a new feedback
 feedbackRouter.post("/create",
-    //  isAuthenticate,
+     isAuthenticate,
       createFeedback);
 
 // Get all feedback (with filters)
@@ -36,7 +33,7 @@ feedbackRouter.put("/:id", isAuthenticate, updateFeedback);
 feedbackRouter.delete("/:id", isAuthenticate, deleteFeedback);
 
 // Submit feedback (change status from draft to submitted)
-feedbackRouter.post("/:id/submit", isAuthenticate, submitFeedback);
+feedbackRouter.post("/:id/submit", isAuthenticate, submitFeedback );
 
 // Get user's feedback
 feedbackRouter.get("/user/feedback", isAuthenticate, getUserFeedback);
@@ -44,8 +41,7 @@ feedbackRouter.get("/user/feedback", isAuthenticate, getUserFeedback);
 // Get feedback for a specific event
 feedbackRouter.get("/event/:eventId", isAuthenticate, getEventFeedback);
 
-// Get feedback for a specific session
-feedbackRouter.get("/session/:sessionId", isAuthenticate, getSessionFeedback);
+
 
 // Get anonymous feedback
 feedbackRouter.get("/anonymous", isAuthenticate, getAnonymousFeedback);
@@ -53,14 +49,8 @@ feedbackRouter.get("/anonymous", isAuthenticate, getAnonymousFeedback);
 // Get non-anonymous feedback
 feedbackRouter.get("/non-anonymous", isAuthenticate, getNonAnonymousFeedback);
 
-// Get feedback by rating
-feedbackRouter.get("/rating/:rating", isAuthenticate, getFeedbackByRating);
 
-// Get feedback by liked most
-feedbackRouter.get(
-  "/liked-most/:likedMost",
-  isAuthenticate,
-  getFeedbackByLikedMost
-);
+
+
 
 export default feedbackRouter;
