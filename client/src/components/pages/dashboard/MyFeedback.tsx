@@ -6,6 +6,8 @@ import { RootState } from '@/redux/store';
 import { useGetEventsByUserIdQuery } from '@/redux/features/api/event/eventApi';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import CustomFeedback from "../feedback/CustomFeedback";
+import FeedbackForm from "../feedback/CustomFeedback";
 
 interface Event {
   _id: string;
@@ -70,6 +72,7 @@ const MyFeedback: React.FC = () => {
     }
   );
   const latestEvent = eventsData && eventsData.data[0];
+  console.log(latestEvent);
 
   const feedbackHero = {
     title: latestEvent ? `Feedback for ${latestEvent.eventId.name}` : 'Your Feedback Matters',
@@ -271,7 +274,7 @@ const MyFeedback: React.FC = () => {
       }
 
       {/* Detailed Feedback Form */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
+      {/* <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">
         <div className="border-b border-gray-700 p-4 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
           <h2 className="text-lg font-bold text-white">Detailed Feedback</h2>
           <p className="text-sm text-gray-400">Help us improve with your specific thoughts</p>
@@ -435,7 +438,9 @@ const MyFeedback: React.FC = () => {
             </div>
           </form>
         </div>
-      </div>
+      </div> */}
+
+      <FeedbackForm id={latestEvent?.eventId._id}/>
 
       {/* Your Previous Feedback */}
       <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm mb-6 overflow-hidden">

@@ -75,6 +75,29 @@ export const eventApi = apiSlice.injectEndpoints({
         },
       }),
 
+
+      chatWithAI: builder.mutation({
+        query: (data: any) => ({
+          url: `ai-chat/proactive-response`,
+          method: "POST",
+          body: data,
+        }),
+      }),
+      
+
+      // New endpoints
+      getFeedbackForm: builder.query({
+        query: (eventId) => `/feedback/form/event/${eventId}`,
+        providesTags: ['Feedback'],
+      }),
+      submitFeedbackResponse: builder.mutation({
+        query: ({ id, formFields }) => ({
+          url: `/feedback/form/event/${id}/submit`,
+          method: 'POST',
+          body: { formFields },
+        }),
+        invalidatesTags: ['Feedback'],
+      }),
       
   }),
 });
@@ -84,4 +107,8 @@ export const {
   useCreateEventMutation,
   useGetEventsByIdQuery,
   useGetEventsByUserIdQuery,
+  useChatWithAIMutation,
+
+  useGetFeedbackFormQuery,
+  useSubmitFeedbackResponseMutation,
 } = eventApi;
