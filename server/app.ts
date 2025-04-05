@@ -13,6 +13,8 @@ import eventRoutes from './routes/event.route';
 import issueRouter from './routes/issue.route';
 import feedbackRouter from './routes/feedback.route';
 import shortFeedbackRouter from './routes/shortFeedback.route';
+import geminiRouter from './routes/gemini.route';
+import aiChatRouter from './routes/aichat.route';
 app.use(express.json({ limit: "50mb" }));
 
 app.use((req, res, next) => {
@@ -53,6 +55,8 @@ app.use('/api/v1/events', eventRoutes);
 app.use('/api/v1/issue', issueRouter);
 app.use('/api/v1/feedback', feedbackRouter);
 app.use('/api/v1/short-feedback', shortFeedbackRouter);
+app.use('/api/v1/gemini', geminiRouter);
+app.use('/api/v1/ai-chat', aiChatRouter);
 
 //google auth route
 app.get(
