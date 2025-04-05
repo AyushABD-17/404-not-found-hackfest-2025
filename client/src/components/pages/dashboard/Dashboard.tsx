@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useSelector } from "react-redux";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 const Dashboard: React.FC = () => {
-
+const {data,isLoading,isError} = useLoadUserQuery(undefined);
   const { user } = useSelector((state: any) => state.auth);
   console.log(user);
   const stats = [
@@ -232,7 +233,7 @@ const Dashboard: React.FC = () => {
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 md:p-6 text-white mb-6 shadow-lg">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold mb-2">Welcome, Alex! 👋</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">Welcome, {user && user.name}! 👋</h1>
             <p className="text-indigo-100">TechConf 2023 is happening now. Stay connected!</p>
           </div>
           <div className="mt-4 md:mt-0">
