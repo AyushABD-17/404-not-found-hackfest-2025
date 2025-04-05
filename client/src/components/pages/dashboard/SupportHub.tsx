@@ -158,9 +158,7 @@ const SupportHub: React.FC = () => {
               onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400"; }}
             />
             <div className="absolute inset-0 bg-gradient-to-l from-transparent to-blue-600/60 md:bg-none" />
-            <span className="absolute bottom-2 right-2 text-white/70 text-xs bg-black/30 px-2 py-1 rounded">
-              Photo by Hunters Race
-            </span>
+            
           </div>
         </div>
       </div>
@@ -414,9 +412,7 @@ const SupportHub: React.FC = () => {
             </button>
           </div>
         </div>
-        <span className="absolute bottom-2 right-2 text-white/70 text-xs">
-          Photo by Brooke Lark
-        </span>
+       
       </div>
     </div>
   );

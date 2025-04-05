@@ -7,7 +7,7 @@ const MyFeedback: React.FC = () => {
     title: "How's Your Experience?",
     description: "Your feedback helps us improve and create better experiences for everyone.",
     imageUrl: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8MXx8ZmVlZGJhY2tjZW50ZXIlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjk1NHww&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-    photoCredit: "Photo by Hunters Race",
+   
   };
 
   const quickReactions = [
@@ -107,9 +107,7 @@ const MyFeedback: React.FC = () => {
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-l from-transparent to-purple-600/60 md:bg-none"></div>
-            <div className="absolute bottom-2 right-2 text-white/70 text-xs bg-black/30 px-2 py-1 rounded">
-              {feedbackHero.photoCredit}
-            </div>
+            
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { eventList, registrationList } from "./eventSlice";
 
 export const eventApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    event: builder.query({
+    getEvents: builder.query({
         query: () => ({
           url: "events",
           method: "GET",
@@ -23,6 +23,23 @@ export const eventApi = apiSlice.injectEndpoints({
           }
         },
       }),
+
+      getEventsById: builder.query({
+        query: (id: string) => ({
+          url: `events/${id}`,
+          method: "GET",
+        }),
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const result = await queryFulfilled;
+            return result.data;
+          } catch (error: any) {
+            console.log(error);
+          }
+        },
+      }),
+
+      
      
 
       createEvent: builder.mutation({
@@ -45,7 +62,8 @@ export const eventApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useEventQuery,
+  useGetEventsQuery,
   useCreateEventMutation,
+  useGetEventsByIdQuery,
  
 } = eventApi;

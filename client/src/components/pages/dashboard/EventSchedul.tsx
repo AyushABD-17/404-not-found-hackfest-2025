@@ -9,7 +9,7 @@ const EventSchedule: React.FC = () => {
     time: "10:00 AM - 11:30 AM",
     location: "Main Hall",
     imageUrl: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8MXx8ZXZlbnRzY2hlZHVsZSUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzQzNTI3MTk0fDA&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-    photoCredit: "Photo by Hunters Race",
+   
   };
 
   const dateOptions = [
@@ -111,7 +111,7 @@ const EventSchedule: React.FC = () => {
     location: "Rooftop Lounge",
     description: "Join us for drinks, appetizers, and networking to conclude the first day of the conference.",
     imageUrl: "https://images.unsplash.com/photo-1425421669292-0c3da3b8f529?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8M3x8ZXZlbnRzY2hlZHVsZSUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzQzNTI3MTk0fDA&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-    photoCredit: "Photo by Ben Rosett",
+   
   };
 
   const recommendations = [
@@ -139,7 +139,7 @@ const EventSchedule: React.FC = () => {
     title: "Download Event Resources",
     description: "Get the complete schedule, venue map, and speaker information on your device.",
     imageUrl: "https://images.unsplash.com/photo-1484981138541-3d074aa97716?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8Mnx8ZXZlbnRzY2hlZHVsZSUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzQzNTI3MTk0fDA&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-    photoCredit: "Photo by Brooke Lark",
+    
   };
 
   return (
@@ -198,9 +198,7 @@ const EventSchedule: React.FC = () => {
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-l from-transparent to-indigo-600/60 md:bg-none"></div>
-            <div className="absolute bottom-2 right-2 text-white/70 text-xs bg-black/30 px-2 py-1 rounded">
-              {scheduleHero.photoCredit}
-            </div>
+            
           </div>
         </div>
       </div>
@@ -420,9 +418,7 @@ const EventSchedule: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-2 right-2 text-gray-400 text-xs">
-            {eveningEvent.photoCredit}
-          </div>
+          
         </div>
       </div>
 
@@ -520,9 +516,7 @@ const EventSchedule: React.FC = () => {
                 target.src = "https://placehold.co/400x300";
               }}
             />
-            <div className="absolute bottom-2 right-2 text-white/70 text-xs bg-black/30 px-2 py-1 rounded">
-              {downloads.photoCredit}
-            </div>
+            
           </div>
         </div>
       </div>

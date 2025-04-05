@@ -9,7 +9,7 @@ const LiveUpdates: React.FC = () => {
     description: "Due to overwhelming demand, the Tech Futures keynote has been moved to the Grand Hall. Doors open in 30 minutes.",
     time: "Posted 5 minutes ago",
     imageUrl: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8MXx8bGl2ZXVwZGF0ZXMlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNjg0NXww&ixlib=rb-4.0.3&q=80&w=1080",
-    photoCredit: "Photo by Hunters Race",
+   
   };
 
   const filterTabs = [
@@ -215,9 +215,7 @@ const LiveUpdates: React.FC = () => {
               }}
             />
             <div className="absolute inset-0 bg-purple-900/20" />
-            <span className="absolute bottom-2 right-2 text-white/70 text-xs bg-black/30 px-2 py-1 rounded-md">
-              {featuredUpdate.photoCredit}
-            </span>
+            
           </div>
         </div>
       </div>

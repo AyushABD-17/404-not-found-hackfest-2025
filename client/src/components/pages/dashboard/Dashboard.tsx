@@ -372,9 +372,7 @@ const Dashboard: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className="absolute bottom-2 right-2 text-white text-xs bg-black/30 px-2 py-1 rounded">
-          Photo by Scott Graham
-        </div>
+        
       </div>
     </div>
   );

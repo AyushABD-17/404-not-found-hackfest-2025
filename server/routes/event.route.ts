@@ -9,6 +9,11 @@ router.post("/",
     // authorizeRoles("client"), 
     EventController.createEvent);
 
+
+router.get("/:id", 
+      // authorizeRoles("client"), 
+      EventController.getEventById);
+  
 // Get all events (basic info)
 router.get("/", 
     // authorizeRoles("client"), 

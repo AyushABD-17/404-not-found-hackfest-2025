@@ -314,6 +314,12 @@ class EventController {
       });
     }
   }
+
+  async getEventById(req: Request, res: Response) {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    res.status(200).json(event);
+  }
 }
 
 export default new EventController();
