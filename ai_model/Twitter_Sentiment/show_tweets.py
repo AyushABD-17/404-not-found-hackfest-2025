@@ -1,8 +1,11 @@
 import tweepy
 import time
+import os
+from dotenv import load_dotenv
 
-# Replace with your actual free-tier Bearer Token
-BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAGhm0QEAAAAALY3SXW1R2UsGLzz9vccYERGeXnk%3DRsFBz2KScxlB9rFDYNKiryiVcRJ8vshO5TC9iNQWXrK2F1Qei2"
+# Load environment variables from .env
+load_dotenv()
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
 # Initialize the client with automatic rate limit waiting enabled
 client = tweepy.Client(bearer_token=BEARER_TOKEN, wait_on_rate_limit=True)
@@ -36,6 +39,6 @@ def fetch_tweets(hashtag, count=10):
             return []
 
 # Example usage:
-tweets = fetch_tweets("stockmarketcrash", count=10)
+tweets = fetch_tweets("War2", count=10)
 for tweet in tweets:
     print(f"{tweet.created_at} | {tweet.text[:60]}...")

@@ -13,44 +13,47 @@ import {
   deleteFeedback
 } from "../controllers/feedback.controller";
 
-const feedbackRouter = express.Router();
+const router = express.Router();
+
+// Protected routes
+router.use(isAuthenticate);
 
 // Create a new feedback
-feedbackRouter.post("/create",
+router.post("/create",
      isAuthenticate,
       createFeedback);
 
 // Get all feedback (with filters)
-feedbackRouter.get("/all", isAuthenticate, getAllFeedback);
+router.get("/all", getAllFeedback);
 
 // Get feedback by ID
-feedbackRouter.get("/:id", isAuthenticate, getFeedbackById);
+router.get("/:id", getFeedbackById);
 
 // Update feedback
-feedbackRouter.put("/:id", isAuthenticate, updateFeedback);
+router.put("/:id", updateFeedback);
 
 // Delete feedback
-feedbackRouter.delete("/:id", isAuthenticate, deleteFeedback);
+router.delete("/:id", deleteFeedback);
 
 // Submit feedback (change status from draft to submitted)
-feedbackRouter.post("/:id/submit", isAuthenticate, submitFeedback );
+router.post("/:id/submit", isAuthenticate, submitFeedback );
 
 // Get user's feedback
-feedbackRouter.get("/user/feedback", isAuthenticate, getUserFeedback);
+router.get("/user/feedback", getUserFeedback);
 
 // Get feedback for a specific event
-feedbackRouter.get("/event/:eventId", isAuthenticate, getEventFeedback);
+router.get("/event/:eventId", isAuthenticate, getEventFeedback);
 
 
 
 // Get anonymous feedback
-feedbackRouter.get("/anonymous", isAuthenticate, getAnonymousFeedback);
+router.get("/anonymous", getAnonymousFeedback);
 
 // Get non-anonymous feedback
-feedbackRouter.get("/non-anonymous", isAuthenticate, getNonAnonymousFeedback);
+router.get("/non-anonymous", getNonAnonymousFeedback);
 
 
 
 
 
-export default feedbackRouter;
+export default router;
