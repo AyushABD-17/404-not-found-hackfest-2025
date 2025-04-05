@@ -49,8 +49,8 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["customer", "admin", "staff"],
-      default: "customer",
+      enum: ["client", "admin", "user"],
+      default: "user",
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
