@@ -1,5 +1,5 @@
-import express from 'express';
-import { isAuthenticate, authorizeRoles } from '../middleware/auth';
+import express from "express";
+import { isAuthenticate, authorizeRoles } from "../middleware/auth";
 import {
   createFeedback,
   getAllFeedback,
@@ -13,48 +13,54 @@ import {
   getAnonymousFeedback,
   getNonAnonymousFeedback,
   getFeedbackByRating,
-  getFeedbackByLikedMost
-} from '../controllers/feedback.controller';
+  getFeedbackByLikedMost,
+} from "../controllers/feedback.controller";
 
 const feedbackRouter = express.Router();
 
 // Create a new feedback
-feedbackRouter.post('/create', isAuthenticate, createFeedback);
+feedbackRouter.post("/create",
+    //  isAuthenticate,
+      createFeedback);
 
 // Get all feedback (with filters)
-feedbackRouter.get('/all', isAuthenticate, getAllFeedback);
+feedbackRouter.get("/all", isAuthenticate, getAllFeedback);
 
 // Get feedback by ID
-feedbackRouter.get('/:id', isAuthenticate, getFeedbackById);
+feedbackRouter.get("/:id", isAuthenticate, getFeedbackById);
 
 // Update feedback
-feedbackRouter.put('/:id', isAuthenticate, updateFeedback);
+feedbackRouter.put("/:id", isAuthenticate, updateFeedback);
 
 // Delete feedback
-feedbackRouter.delete('/:id', isAuthenticate, deleteFeedback);
+feedbackRouter.delete("/:id", isAuthenticate, deleteFeedback);
 
 // Submit feedback (change status from draft to submitted)
-feedbackRouter.post('/:id/submit', isAuthenticate, submitFeedback);
+feedbackRouter.post("/:id/submit", isAuthenticate, submitFeedback);
 
 // Get user's feedback
-feedbackRouter.get('/user/feedback', isAuthenticate, getUserFeedback);
+feedbackRouter.get("/user/feedback", isAuthenticate, getUserFeedback);
 
 // Get feedback for a specific event
-feedbackRouter.get('/event/:eventId', isAuthenticate, getEventFeedback);
+feedbackRouter.get("/event/:eventId", isAuthenticate, getEventFeedback);
 
 // Get feedback for a specific session
-feedbackRouter.get('/session/:sessionId', isAuthenticate, getSessionFeedback);
+feedbackRouter.get("/session/:sessionId", isAuthenticate, getSessionFeedback);
 
 // Get anonymous feedback
-feedbackRouter.get('/anonymous', isAuthenticate, getAnonymousFeedback);
+feedbackRouter.get("/anonymous", isAuthenticate, getAnonymousFeedback);
 
 // Get non-anonymous feedback
-feedbackRouter.get('/non-anonymous', isAuthenticate, getNonAnonymousFeedback);
+feedbackRouter.get("/non-anonymous", isAuthenticate, getNonAnonymousFeedback);
 
 // Get feedback by rating
-feedbackRouter.get('/rating/:rating', isAuthenticate, getFeedbackByRating);
+feedbackRouter.get("/rating/:rating", isAuthenticate, getFeedbackByRating);
 
 // Get feedback by liked most
-feedbackRouter.get('/liked-most/:likedMost', isAuthenticate, getFeedbackByLikedMost);
+feedbackRouter.get(
+  "/liked-most/:likedMost",
+  isAuthenticate,
+  getFeedbackByLikedMost
+);
 
-export default feedbackRouter; 
+export default feedbackRouter;
