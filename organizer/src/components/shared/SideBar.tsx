@@ -4,25 +4,42 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 interface NavItem {
   href: string;
   label: string;
   icon: React.ReactNode;
   alertCount?: number;
-  isActive?: boolean;
 }
 
 const navItems: NavItem[] = [
   {
-    href: '/dashboard',
+    href: '/',
     label: 'Dashboard',
     icon: (
       <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
       </svg>
     ),
-    isActive: true,
+  },
+  {
+    href: '/event-setup',
+    label: 'Event Setup',
+    icon: (
+      <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+      </svg>
+    ),
+  },
+  {
+    href: '/sentiment-tracking',
+    label: 'Sentiment Tracking',
+    icon: (
+      <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
   },
   {
     href: '/reports',
@@ -65,6 +82,8 @@ const navItems: NavItem[] = [
 ];
 
 export const Sidebar: React.FC = () => {
+  const pathname = usePathname();
+
   return (
     <nav className="fixed h-screen w-64 bg-gray-800/50 border-r border-gray-700/30 hidden lg:block">
       {/* Header */}
@@ -84,7 +103,7 @@ export const Sidebar: React.FC = () => {
             key={item.href}
             href={item.href}
             className={`flex items-center px-6 py-3 transition-colors duration-200 ${
-              item.isActive
+              pathname === item.href
                 ? 'text-white bg-indigo-600 border-l-4 border-indigo-400'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
             }`}
@@ -109,7 +128,6 @@ export const Sidebar: React.FC = () => {
             width={40}
             height={40}
             className="rounded-full border border-gray-600"
-            
           />
           <div className="ml-3">
             <p className="text-sm font-medium text-white">Event Manager</p>
