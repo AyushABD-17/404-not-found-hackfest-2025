@@ -83,4 +83,6 @@ FeedbackSchema.index({ status: 1 });
 
 const Feedback = model<IFeedback>('Feedback', FeedbackSchema);
 
+export const UserFeedback = model<IFeedback>('UserFeedback', FeedbackSchema);
+
 export default Feedback; 

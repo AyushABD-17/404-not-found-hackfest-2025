@@ -7,7 +7,6 @@ const ReportAnIssue: React.FC = () => {
     title: "Need Immediate Assistance?",
     description: "For emergencies, security concerns, or urgent issues requiring immediate attention.",
     imageUrl: "https://images.unsplash.com/photo-1425421669292-0c3da3b8f529?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MzQ2fDB8MXxzZWFyY2h8M3x8aXNzdWVyZXBvcnRpbmclMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc0MzUyNzA3NHww&ixlib=rb-4.0.3&q=80&w=1080?q=80",
-    
   };
 
   const issueCategories = [
@@ -123,7 +122,7 @@ const ReportAnIssue: React.FC = () => {
       label: "Low (Feedback for future events)",
       icon: (
         <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 12 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
         </svg>
       ),
     },
@@ -279,13 +278,12 @@ const ReportAnIssue: React.FC = () => {
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-l from-transparent to-red-600/60 md:bg-none"></div>
-            
           </div>
         </div>
       </div>
 
       {/* Main Issue Reporting Form */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
         <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-purple-50 to-indigo-50">
           <h2 className="text-lg font-bold text-gray-800">Report an Issue</h2>
           <p className="text-sm text-gray-500">We'll address your concerns as quickly as possible</p>
@@ -435,14 +433,14 @@ const ReportAnIssue: React.FC = () => {
       </div>
 
       {/* Issue Status Tracker */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-200 shadow-sm mb-8 overflow-hidden">
         <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-blue-50 to-cyan-50">
           <h2 className="text-lg font-bold text-gray-800">Your Recent Reports</h2>
         </div>
 
         <div className="divide-y divide-gray-100">
           {recentReports.map((report, index) => (
-            <div key={index} className="p-4 hover:bg-gray-50 transition duration-150">
+            <div key={index} className="p-4 hover:bg-gray-700 transition duration-150">
               <div className="flex justify-between items-start">
                 <div className="flex items-start space-x-3">
                   <div className={`h-8 w-8 rounded-full bg-${report.statusColor}-100 flex items-center justify-center`}>
@@ -509,7 +507,7 @@ const ReportAnIssue: React.FC = () => {
       {/* Additional Resources */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {resources.map((resource, index) => (
-          <div key={index} className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition duration-200">
+          <div key={index} className="bg-gray-800 rounded-xl border border-gray-200 p-5 hover:shadow-md transition duration-200">
             <div className="flex items-start">
               <div className={`bg-${index === 0 ? "indigo" : "purple"}-100 p-3 rounded-lg mr-4`}>
                 {resource.icon}
@@ -530,7 +528,7 @@ const ReportAnIssue: React.FC = () => {
       </div>
 
       {/* Emergency Contacts */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="border-b border-gray-100 p-4 bg-gradient-to-r from-red-50 to-orange-50">
           <h2 className="text-lg font-bold text-gray-800">Emergency Contacts</h2>
         </div>

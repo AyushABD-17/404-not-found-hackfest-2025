@@ -12,6 +12,8 @@ import {
   submitFeedback,
   deleteFeedback
 } from "../controllers/feedback.controller";
+import { getFeedbackForm } from "../controllers/feedbackform.controller";
+import { submitFeedbackResponse } from "../controllers/feedbackform.controller";
 
 const router = express.Router();
 
@@ -52,6 +54,9 @@ router.get("/anonymous", getAnonymousFeedback);
 // Get non-anonymous feedback
 router.get("/non-anonymous", getNonAnonymousFeedback);
 
+
+router.get('/form/event/:eventId', getFeedbackForm);
+router.post('/form/event/:eventId/submit', submitFeedbackResponse);
 
 
 

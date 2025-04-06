@@ -53,6 +53,7 @@
   "devDependencies": {
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
+    "@types/ws": "^8.18.1",
     "copyfiles": "^2.4.1",
     "netlify-cli": "^15.0.2",
     "pre-commit": "^1.2.2",

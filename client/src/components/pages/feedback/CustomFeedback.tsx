@@ -26,6 +26,7 @@ console.log(id);
   const { user } = useSelector((state: any) => state.auth);
 
   const { data: feedbackData, isLoading, error } = useGetFeedbackFormQuery(id);
+  console.log(feedbackData);
   const [submitFeedback, { isLoading: isSubmitting, isSuccess, error: submitError }] = useSubmitFeedbackResponseMutation();
 
   const [formResponses, setFormResponses] = useState<FormResponse>({});

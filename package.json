@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.782.0",
     "@google/generative-ai": "^0.24.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@reduxjs/toolkit": "^2.6.1",
@@ -7,5 +8,8 @@
     "next": "^15.2.4",
     "react-beautiful-dnd": "^13.1.1",
     "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0"
   }
 }
