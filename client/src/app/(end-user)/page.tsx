@@ -14,9 +14,6 @@ const Page = () => {
     >
       <Dashboard />
       <LiveUpdates />
-      <ReportAnIssue />
-      <EventSchedule />
-      <SupportHub />
     </div>
   );
 };
